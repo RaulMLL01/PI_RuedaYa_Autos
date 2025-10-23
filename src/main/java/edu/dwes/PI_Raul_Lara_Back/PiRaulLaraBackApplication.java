@@ -8,7 +8,6 @@ public class PiRaulLaraBackApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PiRaulLaraBackApplication.class, args);
-		System.out.println("Cargando Aplicación");
 	}
 
 }
