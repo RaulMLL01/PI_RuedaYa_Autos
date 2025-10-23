@@ -34,6 +34,22 @@ public class Vehiculo {
     @OneToOne(mappedBy = "vehiculo", cascade = CascadeType.ALL)
     private Anuncio anuncio;
 
+    public Vehiculo() {
+    }
+
+    public Vehiculo(Long id, String marca, String modelo, Integer anio, String tipo, String combustible,
+            Integer kilometraje, Double precioEstimado, Anuncio anuncio) {
+        this.id = id;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.anio = anio;
+        this.tipo = tipo;
+        this.combustible = combustible;
+        this.kilometraje = kilometraje;
+        this.precioEstimado = precioEstimado;
+        this.anuncio = anuncio;
+    }
+
     public Long getId() {
         return id;
     }
@@ -103,22 +119,6 @@ public class Vehiculo {
     }
 
     public void setAnuncio(Anuncio anuncio) {
-        this.anuncio = anuncio;
-    }
-
-    public Vehiculo() {
-    }
-
-    public Vehiculo(Long id, String marca, String modelo, Integer anio, String tipo, String combustible,
-            Integer kilometraje, Double precioEstimado, Anuncio anuncio) {
-        this.id = id;
-        this.marca = marca;
-        this.modelo = modelo;
-        this.anio = anio;
-        this.tipo = tipo;
-        this.combustible = combustible;
-        this.kilometraje = kilometraje;
-        this.precioEstimado = precioEstimado;
         this.anuncio = anuncio;
     }
 
