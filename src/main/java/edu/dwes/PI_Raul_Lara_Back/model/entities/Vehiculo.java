@@ -1,4 +1,4 @@
-package edu.dwes.PI_Raul_Lara_Back.model;
+package edu.dwes.PI_Raul_Lara_Back.model.entities;
 
 import jakarta.persistence.*;
 
@@ -28,7 +28,7 @@ public class Vehiculo {
 
     private Integer kilometraje;
 
-    @Column(name = "precio_estimado", precision = 10, scale = 2)
+    @Column(name = "precio_estimado")
     private Double precioEstimado;
 
     @OneToOne(mappedBy = "vehiculo", cascade = CascadeType.ALL)

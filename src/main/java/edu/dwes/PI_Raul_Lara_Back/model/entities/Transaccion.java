@@ -1,4 +1,4 @@
-package edu.dwes.PI_Raul_Lara_Back.model;
+package edu.dwes.PI_Raul_Lara_Back.model.entities;
 
 import jakarta.persistence.*;
 
@@ -33,7 +33,7 @@ public class Transaccion {
     @Column(name = "duracion_alquiler")
     private Integer duracionAlquiler;
 
-    @Column(name = "precio_alquiler", precision = 10, scale = 2)
+    @Column(name = "precio_alquiler")
     private Double precioAlquiler;
 
     public Transaccion() {

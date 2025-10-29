@@ -3,7 +3,7 @@ package edu.dwes.PI_Raul_Lara_Back.service;
 import java.util.List;
 import java.util.Optional;
 
-import edu.dwes.PI_Raul_Lara_Back.model.Usuario;
+import edu.dwes.PI_Raul_Lara_Back.model.entities.Usuario;
 
 public interface IUsuarioService {
     List<Usuario> findAll();

@@ -3,11 +3,14 @@ package edu.dwes.PI_Raul_Lara_Back.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import edu.dwes.PI_Raul_Lara_Back.model.Usuario;
+import edu.dwes.PI_Raul_Lara_Back.model.dto.UsuarioDTO;
+import edu.dwes.PI_Raul_Lara_Back.model.entities.Usuario;
+import edu.dwes.PI_Raul_Lara_Back.service.DTOConverter;
 import edu.dwes.PI_Raul_Lara_Back.service.UsuarioServiceImpl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -17,8 +20,11 @@ public class UsuarioController {
     private UsuarioServiceImpl usuarioService;
 
     @GetMapping
-    public List<Usuario> listarUsuarios() {
-        return usuarioService.findAll();
+    public List<UsuarioDTO> listarUsuarios() {
+        return usuarioService.findAll()
+                .stream()
+                .map(DTOConverter::toDTO)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")

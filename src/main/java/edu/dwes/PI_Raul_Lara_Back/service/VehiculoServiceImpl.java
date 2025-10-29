@@ -3,7 +3,7 @@ package edu.dwes.PI_Raul_Lara_Back.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import edu.dwes.PI_Raul_Lara_Back.model.Vehiculo;
+import edu.dwes.PI_Raul_Lara_Back.model.entities.Vehiculo;
 import edu.dwes.PI_Raul_Lara_Back.repository.IVehiculoRepository;
 
 import java.util.List;
