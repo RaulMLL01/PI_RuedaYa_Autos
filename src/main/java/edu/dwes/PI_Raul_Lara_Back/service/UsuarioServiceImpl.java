@@ -1,10 +1,10 @@
-package edu.dwes.service;
+package edu.dwes.PI_Raul_Lara_Back.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import edu.dwes.model.Usuario;
-import edu.dwes.repository.IUsuarioRepository;
+import edu.dwes.PI_Raul_Lara_Back.model.Usuario;
+import edu.dwes.PI_Raul_Lara_Back.repository.IUsuarioRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,11 +13,7 @@ import java.util.Optional;
 public class UsuarioServiceImpl implements IUsuarioService {
 
     @Autowired
-    private final IUsuarioRepository usuarioRepository;
-
-    public UsuarioServiceImpl(IUsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
-    }
+    private IUsuarioRepository usuarioRepository;
 
     @Override
     public List<Usuario> findAll() {

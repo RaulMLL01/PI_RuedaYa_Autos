@@ -1,9 +1,9 @@
-package edu.dwes.service;
+package edu.dwes.PI_Raul_Lara_Back.service;
 
 import java.util.List;
 import java.util.Optional;
 
-import edu.dwes.model.Vehiculo;
+import edu.dwes.PI_Raul_Lara_Back.model.Vehiculo;
 
 public interface IVehiculoService {
     List<Vehiculo> findAll();

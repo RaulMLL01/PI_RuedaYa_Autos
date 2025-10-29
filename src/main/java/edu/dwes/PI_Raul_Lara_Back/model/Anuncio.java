@@ -1,4 +1,4 @@
-package edu.dwes.model;
+package edu.dwes.PI_Raul_Lara_Back.model;
 
 import jakarta.persistence.*;
 

@@ -1,10 +1,10 @@
-package edu.dwes.service;
+package edu.dwes.PI_Raul_Lara_Back.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import edu.dwes.model.Vehiculo;
-import edu.dwes.repository.IVehiculoRepository;
+import edu.dwes.PI_Raul_Lara_Back.model.Vehiculo;
+import edu.dwes.PI_Raul_Lara_Back.repository.IVehiculoRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,11 +13,7 @@ import java.util.Optional;
 public class VehiculoServiceImpl implements IVehiculoService {
 
     @Autowired
-    private final IVehiculoRepository vehiculoRepository;
-
-    public VehiculoServiceImpl(IVehiculoRepository vehiculoRepository) {
-        this.vehiculoRepository = vehiculoRepository;
-    }
+    private IVehiculoRepository vehiculoRepository;
 
     @Override
     public List<Vehiculo> findAll() {

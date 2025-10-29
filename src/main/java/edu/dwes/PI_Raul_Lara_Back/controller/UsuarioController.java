@@ -1,10 +1,10 @@
-package edu.dwes.controller;
+package edu.dwes.PI_Raul_Lara_Back.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import edu.dwes.model.Usuario;
-import edu.dwes.service.UsuarioServiceImpl;
+import edu.dwes.PI_Raul_Lara_Back.model.Usuario;
+import edu.dwes.PI_Raul_Lara_Back.service.UsuarioServiceImpl;
 
 import java.util.List;
 import java.util.Optional;
