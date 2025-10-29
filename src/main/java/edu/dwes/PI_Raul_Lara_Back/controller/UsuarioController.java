@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import edu.dwes.PI_Raul_Lara_Back.model.dto.UsuarioDTO;
 import edu.dwes.PI_Raul_Lara_Back.model.entities.Usuario;
 import edu.dwes.PI_Raul_Lara_Back.service.DTOConverter;
-import edu.dwes.PI_Raul_Lara_Back.service.UsuarioServiceImpl;
+import edu.dwes.PI_Raul_Lara_Back.service.IUsuarioService;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class UsuarioController {
 
     @Autowired
-    private UsuarioServiceImpl usuarioService;
+    private IUsuarioService usuarioService;
 
     @GetMapping
     public List<UsuarioDTO> listarUsuarios() {

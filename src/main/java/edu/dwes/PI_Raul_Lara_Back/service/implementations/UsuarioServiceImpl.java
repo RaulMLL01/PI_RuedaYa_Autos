@@ -1,10 +1,11 @@
-package edu.dwes.PI_Raul_Lara_Back.service;
+package edu.dwes.PI_Raul_Lara_Back.service.implementations;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.dwes.PI_Raul_Lara_Back.model.entities.Usuario;
 import edu.dwes.PI_Raul_Lara_Back.repository.IUsuarioRepository;
+import edu.dwes.PI_Raul_Lara_Back.service.IUsuarioService;
 
 import java.util.List;
 import java.util.Optional;
