@@ -19,7 +19,7 @@ import edu.dwes.PI_Raul_Lara_Back.service.DTOConverter;
 import edu.dwes.PI_Raul_Lara_Back.service.ITransaccionService;
 
 @RestController
-@RequestMapping("/msg")
+@RequestMapping("/tra")
 public class TransaccionController {
 
     @Autowired
