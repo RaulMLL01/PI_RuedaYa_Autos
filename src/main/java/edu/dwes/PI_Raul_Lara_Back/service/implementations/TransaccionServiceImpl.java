@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import edu.dwes.PI_Raul_Lara_Back.model.entities.Transaccion;
 import edu.dwes.PI_Raul_Lara_Back.repository.ITransaccionRepository;
 import edu.dwes.PI_Raul_Lara_Back.service.ITransaccionService;
 
+@Service
 public class TransaccionServiceImpl implements ITransaccionService {
 
     @Autowired

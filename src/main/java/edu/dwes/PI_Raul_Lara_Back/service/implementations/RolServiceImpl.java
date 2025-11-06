@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import edu.dwes.PI_Raul_Lara_Back.model.entities.Rol;
 import edu.dwes.PI_Raul_Lara_Back.repository.IRolRepository;
 import edu.dwes.PI_Raul_Lara_Back.service.IRolService;
 
+@Service
 public class RolServiceImpl implements IRolService {
     @Autowired
     private IRolRepository rolRepository;

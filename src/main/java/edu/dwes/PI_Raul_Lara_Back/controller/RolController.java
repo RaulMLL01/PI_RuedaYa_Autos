@@ -1,5 +1,49 @@
 package edu.dwes.PI_Raul_Lara_Back.controller;
 
-public class RolController {
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import edu.dwes.PI_Raul_Lara_Back.model.dto.RolDTO;
+import edu.dwes.PI_Raul_Lara_Back.model.entities.Rol;
+import edu.dwes.PI_Raul_Lara_Back.service.DTOConverter;
+import edu.dwes.PI_Raul_Lara_Back.service.IRolService;
+
+@RestController
+@RequestMapping("/rol")
+public class RolController {
+    @Autowired
+    private IRolService service;
+
+    @GetMapping
+    public List<RolDTO> listarRol() {
+        return service.findAll()
+                .stream()
+                .map(DTOConverter::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/{id}")
+    public Optional<Rol> obtenerRol(@PathVariable Long id) {
+        return service.findById(id);
+    }
+
+    @PostMapping
+    public Rol guardarRol(@RequestBody Rol Rol) {
+        return service.save(Rol);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminarRol(@PathVariable Long id) {
+        service.deleteById(id);
+    }
 }

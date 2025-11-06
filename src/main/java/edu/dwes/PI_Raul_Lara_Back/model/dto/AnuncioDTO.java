@@ -57,7 +57,4 @@ public class AnuncioDTO {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-
-    // Getters, setters y constructor
-
 }

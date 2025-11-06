@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import edu.dwes.PI_Raul_Lara_Back.model.entities.Mensaje;
 import edu.dwes.PI_Raul_Lara_Back.repository.IMensajeRepository;
 import edu.dwes.PI_Raul_Lara_Back.service.IMensajeService;
 
+@Service
 public class MensajeServiceImpl implements IMensajeService {
     @Autowired
     private IMensajeRepository mensajeRepository;

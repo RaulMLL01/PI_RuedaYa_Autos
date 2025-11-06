@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import edu.dwes.PI_Raul_Lara_Back.model.entities.Anuncio;
 import edu.dwes.PI_Raul_Lara_Back.repository.IAnuncioRepository;
 import edu.dwes.PI_Raul_Lara_Back.service.IAnuncioService;
 
-public class IAnuncioServiceImpl implements IAnuncioService {
+@Service
+public class AnuncioServiceImpl implements IAnuncioService {
 
     @Autowired
     private IAnuncioRepository anuncioRepository;
