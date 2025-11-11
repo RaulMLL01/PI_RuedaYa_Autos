@@ -5,58 +5,70 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "transacciones")
+@Table(name = "transaccion")
 public class Transaccion {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_transaccion")
-    private Long id;
-
-    @OneToOne
-    @JoinColumn(name = "id_anuncio", nullable = false, unique = true)
-    private Anuncio anuncio;
+    @EmbeddedId
+    private TransaccionId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_comprador", nullable = false)
-    private Usuario comprador;
+    @MapsId("vendedorId")
+    @JoinColumn(name = "id_vendedor", nullable = false)
+    private Usuario vendedor;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("anuncioId")
+    @JoinColumn(name = "id_anuncio", nullable = false)
+    private Anuncio anuncio;
 
     @Column(name = "tipo_transaccion", nullable = false, length = 20)
     private String tipoTransaccion;
 
-    @Column(name = "fecha_publicacion")
-    private LocalDate fechaPublicacion;
-
     @Column(name = "fecha_movimiento")
     private LocalDate fechaMovimiento;
+
+    @Column(name = "precio")
+    private Double precio;
 
     @Column(name = "duracion_alquiler")
     private Integer duracionAlquiler;
 
-    @Column(name = "precio_alquiler")
-    private Double precioAlquiler;
-
     public Transaccion() {
     }
 
-    public Transaccion(Long id, Anuncio anuncio, Usuario comprador, String tipoTransaccion, LocalDate fechaPublicacion,
-            LocalDate fechaMovimiento, Integer duracionAlquiler, Double precioAlquiler) {
+    public Transaccion(TransaccionId id, Usuario vendedor, Anuncio anuncio, String tipoTransaccion,
+            LocalDate fechaMovimiento, Double precio, Integer duracionAlquiler) {
         this.id = id;
+        this.vendedor = vendedor;
         this.anuncio = anuncio;
-        this.comprador = comprador;
         this.tipoTransaccion = tipoTransaccion;
-        this.fechaPublicacion = fechaPublicacion;
         this.fechaMovimiento = fechaMovimiento;
+        this.precio = precio;
         this.duracionAlquiler = duracionAlquiler;
-        this.precioAlquiler = precioAlquiler;
     }
 
-    public Long getId() {
+    public TransaccionId getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(TransaccionId id) {
         this.id = id;
+    }
+
+    public Usuario getVendedor() {
+        return vendedor;
+    }
+
+    public void setVendedor(Usuario vendedor) {
+        this.vendedor = vendedor;
+    }
+
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
     }
 
     public Anuncio getAnuncio() {
@@ -67,28 +79,12 @@ public class Transaccion {
         this.anuncio = anuncio;
     }
 
-    public Usuario getComprador() {
-        return comprador;
-    }
-
-    public void setComprador(Usuario comprador) {
-        this.comprador = comprador;
-    }
-
     public String getTipoTransaccion() {
         return tipoTransaccion;
     }
 
     public void setTipoTransaccion(String tipoTransaccion) {
         this.tipoTransaccion = tipoTransaccion;
-    }
-
-    public LocalDate getFechaPublicacion() {
-        return fechaPublicacion;
-    }
-
-    public void setFechaPublicacion(LocalDate fechaPublicacion) {
-        this.fechaPublicacion = fechaPublicacion;
     }
 
     public LocalDate getFechaMovimiento() {
@@ -105,14 +101,6 @@ public class Transaccion {
 
     public void setDuracionAlquiler(Integer duracionAlquiler) {
         this.duracionAlquiler = duracionAlquiler;
-    }
-
-    public Double getPrecioAlquiler() {
-        return precioAlquiler;
-    }
-
-    public void setPrecioAlquiler(Double precioAlquiler) {
-        this.precioAlquiler = precioAlquiler;
     }
 
     @Override
@@ -138,13 +126,5 @@ public class Transaccion {
         } else if (!id.equals(other.id))
             return false;
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Transaccion [id=" + id + ", anuncio=" + anuncio.getId() + ", comprador=" + comprador.getNombre()
-                + ", tipoTransaccion="
-                + tipoTransaccion + ", fechaPublicacion=" + fechaPublicacion + ", fechaMovimiento=" + fechaMovimiento
-                + ", duracionAlquiler=" + duracionAlquiler + ", precioAlquiler=" + precioAlquiler + "]";
     }
 }

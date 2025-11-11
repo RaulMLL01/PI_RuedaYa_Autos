@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "mensajes")
+@Table(name = "mensaje")
 public class Mensaje {
 
     @Id
@@ -27,20 +27,18 @@ public class Mensaje {
     @Column(name = "fecha_envio")
     private LocalDateTime fechaEnvio;
 
-    @Column(nullable = false)
+    @Transient
     private Boolean leido = false;
 
     public Mensaje() {
     }
 
-    public Mensaje(Long id, Usuario emisor, Usuario receptor, String contenido, LocalDateTime fechaEnvio,
-            Boolean leido) {
+    public Mensaje(Long id, Usuario emisor, Usuario receptor, String contenido, LocalDateTime fechaEnvio) {
         this.id = id;
         this.emisor = emisor;
         this.receptor = receptor;
         this.contenido = contenido;
         this.fechaEnvio = fechaEnvio;
-        this.leido = leido;
     }
 
     public Long getId() {

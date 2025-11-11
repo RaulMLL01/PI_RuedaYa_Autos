@@ -1,9 +1,11 @@
 package edu.dwes.PI_Raul_Lara_Back.model.entities;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "vehiculos")
+@Table(name = "vehiculo")
 public class Vehiculo {
 
     @Id
@@ -17,8 +19,8 @@ public class Vehiculo {
     @Column(nullable = false, length = 50)
     private String modelo;
 
-    @Column(name = "año", nullable = false)
-    private Integer anio;
+    @Column(name = "fecha_fabricacion", nullable = false)
+    private LocalDate fecha_fabricacion;
 
     @Column(nullable = false, length = 30)
     private String tipo; // turismo, furgoneta, moto, etc.
@@ -37,12 +39,12 @@ public class Vehiculo {
     public Vehiculo() {
     }
 
-    public Vehiculo(Long id, String marca, String modelo, Integer anio, String tipo, String combustible,
+    public Vehiculo(Long id, String marca, String modelo, LocalDate fecha_fabricacion, String tipo, String combustible,
             Integer kilometraje, Double precioEstimado, Anuncio anuncio) {
         this.id = id;
         this.marca = marca;
         this.modelo = modelo;
-        this.anio = anio;
+        this.fecha_fabricacion = fecha_fabricacion;
         this.tipo = tipo;
         this.combustible = combustible;
         this.kilometraje = kilometraje;
@@ -74,12 +76,12 @@ public class Vehiculo {
         this.modelo = modelo;
     }
 
-    public Integer getAnio() {
-        return anio;
+    public LocalDate getFecha_fabricacion() {
+        return fecha_fabricacion;
     }
 
-    public void setAnio(Integer anio) {
-        this.anio = anio;
+    public void setFecha_fabricacion(LocalDate fecha_fabricacion) {
+        this.fecha_fabricacion = fecha_fabricacion;
     }
 
     public String getTipo() {

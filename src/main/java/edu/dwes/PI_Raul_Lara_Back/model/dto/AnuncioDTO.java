@@ -2,7 +2,6 @@ package edu.dwes.PI_Raul_Lara_Back.model.dto;
 
 public class AnuncioDTO {
     private Long id;
-    private Long usuarioId;
     private Long vehiculoId;
     private String fechaPublicacion;
     private String estado;
@@ -10,9 +9,8 @@ public class AnuncioDTO {
     public AnuncioDTO() {
     }
 
-    public AnuncioDTO(Long id, Long usuarioId, Long vehiculoId, String fechaPublicacion, String estado) {
+    public AnuncioDTO(Long id, Long vehiculoId, String fechaPublicacion, String estado) {
         this.id = id;
-        this.usuarioId = usuarioId;
         this.vehiculoId = vehiculoId;
         this.fechaPublicacion = fechaPublicacion;
         this.estado = estado;
@@ -24,14 +22,6 @@ public class AnuncioDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getUsuarioId() {
-        return usuarioId;
-    }
-
-    public void setUsuarioId(Long usuarioId) {
-        this.usuarioId = usuarioId;
     }
 
     public Long getVehiculoId() {

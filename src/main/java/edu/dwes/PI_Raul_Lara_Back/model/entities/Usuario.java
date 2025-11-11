@@ -1,6 +1,6 @@
 package edu.dwes.PI_Raul_Lara_Back.model.entities;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +17,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "usuario")
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,16 +37,13 @@ public class Usuario {
     private String telefono;
 
     @Column(name = "fecha_registro")
-    private LocalDateTime fechaRegistro;
+    private LocalDate fechaRegistro;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_rol", nullable = false)
     private Rol rol;
 
     @OneToMany(mappedBy = "vendedor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Anuncio> anuncios;
-
-    @OneToMany(mappedBy = "comprador", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Transaccion> transacciones;
 
     @OneToMany(mappedBy = "emisor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -58,7 +55,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(Long id, String nombre, String email, String password, String telefono, LocalDateTime fechaRegistro,
+    public Usuario(Long id, String nombre, String email, String password, String telefono, LocalDate fechaRegistro,
             Rol rol) {
         this.id = id;
         this.nombre = nombre;
@@ -67,7 +64,6 @@ public class Usuario {
         this.telefono = telefono;
         this.fechaRegistro = fechaRegistro;
         this.rol = rol;
-        this.anuncios = new ArrayList<>();
         this.transacciones = new ArrayList<>();
         this.mensajesEnviados = new ArrayList<>();
         this.mensajesRecibidos = new ArrayList<>();
@@ -113,11 +109,11 @@ public class Usuario {
         this.telefono = telefono;
     }
 
-    public LocalDateTime getFechaRegistro() {
+    public LocalDate getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(LocalDateTime fechaRegistro) {
+    public void setFechaRegistro(LocalDate fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 
@@ -127,14 +123,6 @@ public class Usuario {
 
     public void setRol(Rol rol) {
         this.rol = rol;
-    }
-
-    public List<Anuncio> getAnuncios() {
-        return anuncios;
-    }
-
-    public void setAnuncios(List<Anuncio> anuncios) {
-        this.anuncios = anuncios;
     }
 
     public List<Transaccion> getTransacciones() {

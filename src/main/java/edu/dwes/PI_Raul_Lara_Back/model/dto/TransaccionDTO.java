@@ -1,7 +1,6 @@
 package edu.dwes.PI_Raul_Lara_Back.model.dto;
 
 public class TransaccionDTO {
-    private Long id;
     private Long anuncioId;
     private Long usuarioId;
     private String tipo;
@@ -10,20 +9,11 @@ public class TransaccionDTO {
     public TransaccionDTO() {
     }
 
-    public TransaccionDTO(Long id, Long anuncioId, Long usuarioId, String tipo, String fechaMovimiento) {
-        this.id = id;
+    public TransaccionDTO(Long anuncioId, Long usuarioId, String tipo, String fechaMovimiento) {
         this.anuncioId = anuncioId;
         this.usuarioId = usuarioId;
         this.tipo = tipo;
         this.fechaMovimiento = fechaMovimiento;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Long getAnuncioId() {

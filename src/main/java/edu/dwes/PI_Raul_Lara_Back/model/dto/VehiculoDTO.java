@@ -5,17 +5,17 @@ public class VehiculoDTO {
     private Long id;
     private String marca;
     private String modelo;
-    private int ano;
+    private String fecha;
     private String tipo;
 
     public VehiculoDTO() {
     }
 
-    public VehiculoDTO(Long id, String marca, String modelo, int ano, String tipo) {
+    public VehiculoDTO(Long id, String marca, String modelo, String fecha, String tipo) {
         this.id = id;
         this.marca = marca;
         this.modelo = modelo;
-        this.ano = ano;
+        this.fecha = fecha;
         this.tipo = tipo;
     }
 
@@ -43,12 +43,12 @@ public class VehiculoDTO {
         this.modelo = modelo;
     }
 
-    public int getAno() {
-        return ano;
+    public String getFecha() {
+        return fecha;
     }
 
-    public void setAno(int ano) {
-        this.ano = ano;
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
 
     public String getTipo() {
@@ -58,6 +58,4 @@ public class VehiculoDTO {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-
-    // Getters & setters
 }

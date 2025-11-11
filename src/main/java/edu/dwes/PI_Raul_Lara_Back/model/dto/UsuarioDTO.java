@@ -1,20 +1,18 @@
 package edu.dwes.PI_Raul_Lara_Back.model.dto;
 
-import java.time.LocalDateTime;
-
 public class UsuarioDTO {
 
     private Long id;
     private String nombre;
     private String email;
     private String telefono;
-    private LocalDateTime fechaRegistro;
+    private String fechaRegistro;
     private String rolNombre;
 
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(Long id, String nombre, String email, String telefono, LocalDateTime fechaRegistro,
+    public UsuarioDTO(Long id, String nombre, String email, String telefono, String fechaRegistro,
             String rolNombre) {
         this.id = id;
         this.nombre = nombre;
@@ -56,11 +54,11 @@ public class UsuarioDTO {
         this.telefono = telefono;
     }
 
-    public LocalDateTime getFechaRegistro() {
+    public String getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(LocalDateTime fechaRegistro) {
+    public void setFechaRegistro(String fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 

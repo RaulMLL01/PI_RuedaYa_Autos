@@ -23,7 +23,7 @@ public class DTOConverter {
                 usuario.getNombre(),
                 usuario.getEmail(),
                 usuario.getTelefono(),
-                usuario.getFechaRegistro(),
+                usuario.getFechaRegistro().toString(),
                 usuario.getRol() != null ? usuario.getRol().getNombre() : null);
     }
 
@@ -32,22 +32,22 @@ public class DTOConverter {
     }
 
     public static VehiculoDTO toDTO(Vehiculo v) {
-        return new VehiculoDTO(v.getId(), v.getMarca(), v.getModelo(), v.getAnio(), v.getTipo());
+        return new VehiculoDTO(v.getId(), v.getMarca(), v.getModelo(), v.getFecha_fabricacion().toString(),
+                v.getTipo());
     }
 
     public static AnuncioDTO toDTO(Anuncio a) {
         return new AnuncioDTO(
                 a.getId(),
-                a.getVendedor().getId(),
                 a.getVehiculo().getId(),
                 a.getFechaPublicacion().toString(),
                 a.getEstado());
     }
 
     public static TransaccionDTO toDTO(Transaccion t) {
-        return new TransaccionDTO(t.getId(),
+        return new TransaccionDTO(
                 t.getAnuncio().getId(),
-                t.getComprador().getId(),
+                t.getVendedor().getId(),
                 t.getTipoTransaccion(),
                 t.getFechaMovimiento().toString());
     }

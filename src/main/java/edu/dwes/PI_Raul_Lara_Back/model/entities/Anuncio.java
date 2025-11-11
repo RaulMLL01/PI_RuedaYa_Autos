@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "anuncios")
+@Table(name = "anuncio")
 public class Anuncio {
 
     @Id
@@ -18,10 +18,6 @@ public class Anuncio {
     @JoinColumn(name = "id_vehiculo", nullable = false, unique = true)
     private Vehiculo vehiculo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_vendedor", nullable = false)
-    private Usuario vendedor;
-
     @Column(name = "fecha_publicacion")
     private LocalDate fechaPublicacion;
 
@@ -31,27 +27,19 @@ public class Anuncio {
     @Column(columnDefinition = "TEXT")
     private String descripcion;
 
-    // PostgreSQL TEXT[] puede mapearse como List<String> con @ElementCollection
-    @ElementCollection
-    @CollectionTable(name = "anuncio_imagenes", joinColumns = @JoinColumn(name = "id_anuncio"))
-    @Column(name = "imagen")
-    private List<String> imagenes;
-
     @OneToOne(mappedBy = "anuncio", cascade = CascadeType.ALL)
     private Transaccion transaccion;
 
     public Anuncio() {
     }
 
-    public Anuncio(Long id, Vehiculo vehiculo, Usuario vendedor, LocalDate fechaPublicacion, String estado,
+    public Anuncio(Long id, Vehiculo vehiculo, LocalDate fechaPublicacion, String estado,
             String descripcion, List<String> imagenes, Transaccion transaccion) {
         this.id = id;
         this.vehiculo = vehiculo;
-        this.vendedor = vendedor;
         this.fechaPublicacion = fechaPublicacion;
         this.estado = estado;
         this.descripcion = descripcion;
-        this.imagenes = imagenes;
         this.transaccion = transaccion;
     }
 
@@ -69,14 +57,6 @@ public class Anuncio {
 
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
-    }
-
-    public Usuario getVendedor() {
-        return vendedor;
-    }
-
-    public void setVendedor(Usuario vendedor) {
-        this.vendedor = vendedor;
     }
 
     public LocalDate getFechaPublicacion() {
@@ -103,14 +83,6 @@ public class Anuncio {
         this.descripcion = descripcion;
     }
 
-    public List<String> getImagenes() {
-        return imagenes;
-    }
-
-    public void setImagenes(List<String> imagenes) {
-        this.imagenes = imagenes;
-    }
-
     public Transaccion getTransaccion() {
         return transaccion;
     }
@@ -121,7 +93,7 @@ public class Anuncio {
 
     @Override
     public String toString() {
-        return "Anuncio [id=" + id + ", vehiculo=" + vehiculo + ", vendedor=" + vendedor + ", fechaPublicacion="
+        return "Anuncio [id=" + id + ", vehiculo=" + vehiculo + ", fechaPublicacion="
                 + fechaPublicacion + ", estado=" + estado + ", descripcion=" + descripcion + "]";
     }
 
