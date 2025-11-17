@@ -3,23 +3,23 @@ package edu.dwes.PI_Raul_Lara_Back.model.dto;
 public class UsuarioDTO {
 
     private Long id;
-    private String nombre;
+    private String username;
     private String email;
     private String telefono;
     private String fechaRegistro;
-    private String rolNombre;
+    private String rolName;
 
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(Long id, String nombre, String email, String telefono, String fechaRegistro,
-            String rolNombre) {
+    public UsuarioDTO(Long id, String username, String email, String telefono, String fechaRegistro,
+            String rolName) {
         this.id = id;
-        this.nombre = nombre;
+        this.username = username;
         this.email = email;
         this.telefono = telefono;
         this.fechaRegistro = fechaRegistro;
-        this.rolNombre = rolNombre;
+        this.rolName = rolName;
     }
 
     public Long getId() {
@@ -30,12 +30,12 @@ public class UsuarioDTO {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getusername() {
+        return username;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setusername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -62,11 +62,11 @@ public class UsuarioDTO {
         this.fechaRegistro = fechaRegistro;
     }
 
-    public String getRolNombre() {
-        return rolNombre;
+    public String getrolName() {
+        return rolName;
     }
 
-    public void setRolNombre(String rolNombre) {
-        this.rolNombre = rolNombre;
+    public void setrolName(String rolName) {
+        this.rolName = rolName;
     }
 }

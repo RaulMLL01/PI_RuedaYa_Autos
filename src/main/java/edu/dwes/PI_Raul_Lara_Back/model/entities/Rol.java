@@ -2,6 +2,7 @@ package edu.dwes.PI_Raul_Lara_Back.model.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,13 +21,13 @@ public class Rol {
     private List<Usuario> usuarios;
 
     public Rol() {
-
+        this.usuarios = new ArrayList<>();
     }
 
-    public Rol(Long id, String nombre, List<Usuario> usuarios) {
+    public Rol(Long id, String nombre) {
         this.id = id;
         this.nombre = nombre;
-        this.usuarios = usuarios;
+        this.usuarios = new ArrayList<>();
     }
 
     public Long getId() {

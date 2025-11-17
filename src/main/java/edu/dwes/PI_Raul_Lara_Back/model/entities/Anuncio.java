@@ -3,6 +3,7 @@ package edu.dwes.PI_Raul_Lara_Back.model.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,17 +31,21 @@ public class Anuncio {
     @OneToOne(mappedBy = "anuncio", cascade = CascadeType.ALL)
     private Transaccion transaccion;
 
+    @OneToMany(mappedBy = "anuncio", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Imagen> imagenes = new ArrayList<>();
+
     public Anuncio() {
     }
 
     public Anuncio(Long id, Vehiculo vehiculo, LocalDate fechaPublicacion, String estado,
-            String descripcion, List<String> imagenes, Transaccion transaccion) {
+            String descripcion, Transaccion transaccion) {
         this.id = id;
         this.vehiculo = vehiculo;
         this.fechaPublicacion = fechaPublicacion;
         this.estado = estado;
         this.descripcion = descripcion;
         this.transaccion = transaccion;
+        this.imagenes = new ArrayList<>();
     }
 
     public Long getId() {
@@ -89,6 +94,14 @@ public class Anuncio {
 
     public void setTransaccion(Transaccion transaccion) {
         this.transaccion = transaccion;
+    }
+
+    public List<Imagen> getImagenes() {
+        return imagenes;
+    }
+
+    public void setImagenes(List<Imagen> imagenes) {
+        this.imagenes = imagenes;
     }
 
     @Override

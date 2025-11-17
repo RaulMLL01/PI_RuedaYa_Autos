@@ -1,5 +1,7 @@
 package edu.dwes.PI_Raul_Lara_Back.service;
 
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import edu.dwes.PI_Raul_Lara_Back.model.dto.AnuncioDTO;
@@ -9,6 +11,7 @@ import edu.dwes.PI_Raul_Lara_Back.model.dto.TransaccionDTO;
 import edu.dwes.PI_Raul_Lara_Back.model.dto.UsuarioDTO;
 import edu.dwes.PI_Raul_Lara_Back.model.dto.VehiculoDTO;
 import edu.dwes.PI_Raul_Lara_Back.model.entities.Anuncio;
+import edu.dwes.PI_Raul_Lara_Back.model.entities.Imagen;
 import edu.dwes.PI_Raul_Lara_Back.model.entities.Mensaje;
 import edu.dwes.PI_Raul_Lara_Back.model.entities.Rol;
 import edu.dwes.PI_Raul_Lara_Back.model.entities.Transaccion;
@@ -20,7 +23,7 @@ public class DTOConverter {
     public static UsuarioDTO toDTO(Usuario usuario) {
         return new UsuarioDTO(
                 usuario.getId(),
-                usuario.getNombre(),
+                usuario.getUsername(),
                 usuario.getEmail(),
                 usuario.getTelefono(),
                 usuario.getFechaRegistro().toString(),
@@ -33,15 +36,35 @@ public class DTOConverter {
 
     public static VehiculoDTO toDTO(Vehiculo v) {
         return new VehiculoDTO(v.getId(), v.getMarca(), v.getModelo(), v.getFecha_fabricacion().toString(),
-                v.getTipo());
+                v.getTipo(), v.getPrecioEstimado());
     }
 
     public static AnuncioDTO toDTO(Anuncio a) {
-        return new AnuncioDTO(
-                a.getId(),
-                a.getVehiculo().getId(),
-                a.getFechaPublicacion().toString(),
-                a.getEstado());
+        VehiculoDTO vehiculoDTO = null;
+        if (a.getVehiculo() != null) {
+            vehiculoDTO = new VehiculoDTO(
+                    a.getVehiculo().getId(),
+                    a.getVehiculo().getMarca(),
+                    a.getVehiculo().getModelo(),
+                    a.getVehiculo().getFecha_fabricacion().toString(),
+                    a.getVehiculo().getTipo(),
+                    a.getVehiculo().getPrecioEstimado());
+        }
+
+        AnuncioDTO dto = new AnuncioDTO();
+        dto.setId(a.getId());
+        dto.setVehiculo(vehiculoDTO);
+        dto.setFechaPublicacion(a.getFechaPublicacion().toString());
+        dto.setEstado(a.getEstado());
+
+        if (a.getImagenes() != null) {
+            dto.setImagenes(a.getImagenes()
+                    .stream()
+                    .map(Imagen::getUrl)
+                    .collect(Collectors.toList()));
+        }
+
+        return dto;
     }
 
     public static TransaccionDTO toDTO(Transaccion t) {
@@ -53,10 +76,12 @@ public class DTOConverter {
     }
 
     public static MensajeDTO toDTO(Mensaje m) {
-        return new MensajeDTO(m.getId(),
+        return new MensajeDTO(
+                m.getId(),
                 m.getEmisor().getId(),
                 m.getReceptor().getId(),
                 m.getContenido(),
-                m.getContenido());
+                m.getFechaEnvio().toString());
     }
+
 }

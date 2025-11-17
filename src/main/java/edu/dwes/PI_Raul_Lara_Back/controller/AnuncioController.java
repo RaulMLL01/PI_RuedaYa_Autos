@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import edu.dwes.PI_Raul_Lara_Back.model.entities.Anuncio;
 import edu.dwes.PI_Raul_Lara_Back.service.DTOConverter;
 import edu.dwes.PI_Raul_Lara_Back.service.IAnuncioService;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/anuncios")
 public class AnuncioController {
@@ -47,4 +49,5 @@ public class AnuncioController {
     public void eliminarAnuncio(@PathVariable Long id) {
         AnuncioService.deleteById(id);
     }
+
 }
