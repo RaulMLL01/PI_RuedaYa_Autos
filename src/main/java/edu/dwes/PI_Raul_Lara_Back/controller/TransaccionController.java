@@ -1,5 +1,6 @@
 package edu.dwes.PI_Raul_Lara_Back.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -33,18 +34,25 @@ public class TransaccionController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/{id}")
-    public Optional<Transaccion> obtenerTransaccion(@PathVariable Long id) {
-        return service.findById(id);
+    @GetMapping("/usuario/{usuarioId}/producto/{productoId}/fecha/{fecha}")
+    public Optional<Transaccion> obtenerTransaccion(
+            @PathVariable Long usuarioId,
+            @PathVariable Long productoId,
+            @PathVariable String fecha) {
+        return service.findById(usuarioId, productoId, LocalDate.parse(fecha));
     }
 
     @PostMapping
-    public Transaccion guardarTransaccion(@RequestBody Transaccion Transaccion) {
-        return service.save(Transaccion);
+    public Transaccion guardarTransaccion(@RequestBody Transaccion transaccion) {
+        return service.save(transaccion);
     }
 
-    @DeleteMapping("/{id}")
-    public void eliminarTransaccion(@PathVariable Long id) {
-        service.deleteById(id);
+    @DeleteMapping("/usuario/{usuarioId}/producto/{productoId}")
+    public void eliminarTransaccion(
+            @PathVariable Long usuarioId,
+            @PathVariable Long productoId,
+            @PathVariable String fecha) {
+
+        service.deleteById(usuarioId, productoId, LocalDate.parse(fecha));
     }
 }
