@@ -1,12 +1,17 @@
 package edu.dwes.PI_Raul_Lara_Back.controller;
 
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import edu.dwes.PI_Raul_Lara_Back.exceptions.NonExistentException;
+import edu.dwes.PI_Raul_Lara_Back.model.dto.TransaccionDTO;
 import edu.dwes.PI_Raul_Lara_Back.model.dto.UsuarioDTO;
+import edu.dwes.PI_Raul_Lara_Back.model.entities.Usuario;
+import edu.dwes.PI_Raul_Lara_Back.service.DTOConverter;
 import edu.dwes.PI_Raul_Lara_Back.service.IUsuarioService;
 
 @RestController
@@ -14,11 +19,11 @@ import edu.dwes.PI_Raul_Lara_Back.service.IUsuarioService;
 @CrossOrigin(origins = "*")
 public class UsuarioController {
 
-    private final IUsuarioService usuarioService;
+    @Autowired
+    private IUsuarioService usuarioService;
 
-    public UsuarioController(IUsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
-    }
+    @Autowired
+    private DTOConverter converter;
 
     @GetMapping
     public ResponseEntity<List<UsuarioDTO>> listar() {
@@ -44,7 +49,6 @@ public class UsuarioController {
         try {
             return ResponseEntity.ok(usuarioService.updateFromDTO(id, dto));
         } catch (NonExistentException e) {
-            // TODO Auto-generated catch block
             return ResponseEntity.notFound().build();
         }
     }
@@ -54,4 +58,25 @@ public class UsuarioController {
         usuarioService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<?> getByEmail(@PathVariable String email) {
+        try {
+            Usuario u = usuarioService.findByEmail(email);
+            return ResponseEntity.ok(converter.toDTO(u));
+        } catch (NonExistentException e) {
+            return ResponseEntity.status(404).body("Usuario no encontrado");
+        }
+    }
+
+    @GetMapping("/{email}/anuncios")
+    public ResponseEntity<?> getAnunciosUsuario(@PathVariable String email) {
+        try {
+            List<TransaccionDTO> anuncios = usuarioService.findAllAnuncios(email);
+            return ResponseEntity.ok(anuncios);
+        } catch (NonExistentException e) {
+            return ResponseEntity.status(404).body("El usuario no existe");
+        }
+    }
+
 }

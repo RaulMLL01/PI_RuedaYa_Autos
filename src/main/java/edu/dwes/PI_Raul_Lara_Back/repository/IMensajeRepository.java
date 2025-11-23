@@ -19,4 +19,9 @@ public interface IMensajeRepository extends JpaRepository<Mensaje, Long> {
     Usuario findReceptorByMensajeId(@Param("id") Long id);
 
     List<Mensaje> findByEmisorAndReceptor(Usuario emisor, Usuario receptor);
+
+    @Query("SELECT m FROM Mensaje m WHERE m.emisor = :usuario OR m.receptor = :usuario ORDER BY m.fechaEnvio DESC")
+    List<Mensaje> findAllByUsuario(@Param("usuario") Usuario usuario);
+
+    Long countByReceptorEmailAndLeidoFalse(String email);
 }

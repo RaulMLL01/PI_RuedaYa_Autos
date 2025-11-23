@@ -57,4 +57,26 @@ public class MensajeController {
         servicio.eliminar(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/usuario/{email}")
+    public ResponseEntity<?> getMensajesUsuario(@PathVariable String email) {
+        try {
+            List<MensajeDTO> mensajes = servicio.findAllForUser(email);
+            return ResponseEntity.ok(mensajes);
+
+        } catch (NonExistentException e) {
+            return ResponseEntity.status(404).body("El usuario no existe");
+        }
+    }
+
+    @GetMapping("/no-leidos/{email}")
+    public ResponseEntity<?> countNoLeidos(@PathVariable String email) {
+        try {
+            Long count = servicio.countMensajesNoLeidos(email);
+            return ResponseEntity.ok(count);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al obtener no leídos");
+        }
+    }
+
 }

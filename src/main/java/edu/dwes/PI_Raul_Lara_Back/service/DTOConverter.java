@@ -118,15 +118,19 @@ public class DTOConverter {
     // MENSAJE
     // ---------------------------------------------------------
     public MensajeDTO toDTO(Mensaje m) {
-        if (m == null)
-            return null;
-
         MensajeDTO dto = new MensajeDTO();
-        dto.setEmisorId(m.getEmisor().getId());
-        dto.setFechaEnvio(m.getFechaEnvio().toString());
-        dto.setReceptorId(m.getReceptor().getId());
-        dto.setContenido(m.getContenido());
+
         dto.setId(m.getId());
+        dto.setContenido(m.getContenido());
+        dto.setFechaEnvio(m.getFechaEnvio().toString());
+
+        dto.setEmisorId(m.getEmisor().getId());
+        dto.setEmisorEmail(m.getEmisor().getEmail());
+        dto.setEmisorNombre(m.getEmisor().getNombre());
+
+        dto.setReceptorId(m.getReceptor().getId());
+        dto.setReceptorEmail(m.getReceptor().getEmail());
+        dto.setReceptorNombre(m.getReceptor().getNombre());
 
         return dto;
     }
@@ -149,14 +153,19 @@ public class DTOConverter {
     // TRANSACCION
     // ---------------------------------------------------------
     public TransaccionDTO toDTO(Transaccion t) {
-        if (t == null)
+        if (t == null) {
             return null;
+        }
 
-        return new TransaccionDTO(
-                t.getAnuncio() != null ? t.getAnuncio().getId() : null,
-                t.getVendedor() != null ? t.getVendedor().getId() : null,
-                t.getTipoTransaccion(),
+        TransaccionDTO dto = new TransaccionDTO();
+
+        dto.setAnuncioId(t.getAnuncio().getId());
+        dto.setUsuarioId(t.getVendedor().getId());
+        dto.setTipo(t.getTipoTransaccion());
+        dto.setFechaMovimiento(
                 t.getFechaMovimiento() != null ? t.getFechaMovimiento().toString() : null);
+
+        return dto;
     }
 
     public Transaccion toEntity(TransaccionDTO dto) {

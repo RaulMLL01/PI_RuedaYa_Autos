@@ -21,4 +21,9 @@ public interface IMensajeService {
     void eliminar(Long id);
 
     List<MensajeDTO> mensajesEntreUsuarios(Long idEmisor, Long idReceptor) throws NonExistentException;
+
+    List<MensajeDTO> findAllForUser(String email) throws NonExistentException;
+
+    Long countMensajesNoLeidos(String email);
+
 }

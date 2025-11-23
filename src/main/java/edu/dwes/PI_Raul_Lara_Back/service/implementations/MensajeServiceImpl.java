@@ -96,4 +96,21 @@ public class MensajeServiceImpl implements IMensajeService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<MensajeDTO> findAllForUser(String email) throws NonExistentException {
+
+        Usuario usuario = repo.findByEmail(email)
+                .orElseThrow(() -> new NonExistentException("Usuario no encontrado"));
+
+        List<Mensaje> mensajes = mensajeRepository.findAllByUsuario(usuario);
+
+        return mensajes.stream()
+                .map(converter::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public Long countMensajesNoLeidos(String email) {
+        return mensajeRepository.countByReceptorEmailAndLeidoFalse(email);
+    }
+
 }

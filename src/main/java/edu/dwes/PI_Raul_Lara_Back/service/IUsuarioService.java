@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import edu.dwes.PI_Raul_Lara_Back.exceptions.NonExistentException;
+import edu.dwes.PI_Raul_Lara_Back.model.dto.TransaccionDTO;
 import edu.dwes.PI_Raul_Lara_Back.model.dto.UsuarioDTO;
+import edu.dwes.PI_Raul_Lara_Back.model.entities.Transaccion;
 import edu.dwes.PI_Raul_Lara_Back.model.entities.Usuario;
 
 @Service
@@ -30,4 +32,6 @@ public interface IUsuarioService {
     boolean existsByEmail(String email);
 
     boolean existsByUsername(String username);
+
+    List<TransaccionDTO> findAllAnuncios(String email) throws NonExistentException;
 }

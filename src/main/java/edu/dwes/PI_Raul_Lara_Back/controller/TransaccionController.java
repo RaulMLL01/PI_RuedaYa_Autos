@@ -31,7 +31,6 @@ public class TransaccionController {
         try {
             return ResponseEntity.ok(service.findDTO(anuncioId, usuarioId, fecha));
         } catch (NonExistentException e) {
-            // TODO Auto-generated catch block
             return ResponseEntity.notFound().build();
         }
     }
@@ -41,7 +40,6 @@ public class TransaccionController {
         try {
             return ResponseEntity.status(201).body(service.createFromDTO(dto));
         } catch (NonExistentException e) {
-            // TODO Auto-generated catch block
             return ResponseEntity.notFound().build();
         }
     }

@@ -59,16 +59,11 @@ public class Authenticator {
     @PostMapping("/register")
     public ResponseEntity<?> registrar(@RequestBody UsuarioDTO request) {
         try {
-            // 1. Comprobar si ya existe el email
             if (usuarioService.findByEmail(request.getEmail()) != null) {
                 return ResponseEntity.status(400).body("El email ya está registrado");
             }
-
-            // 2. Crear usuario nuevo
             UsuarioDTO nuevo = usuarioService.createFromDTO(request);
             Usuario usu = usuarioService.findByEmail(request.getEmail());
-
-            // 3. Generar token tras registro (opcional pero recomendado)
             String token = jwtService.generateToken(usu);
 
             return ResponseEntity.ok(

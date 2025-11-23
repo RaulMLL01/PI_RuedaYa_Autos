@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.dwes.PI_Raul_Lara_Back.exceptions.NonExistentException;
+import edu.dwes.PI_Raul_Lara_Back.model.dto.TransaccionDTO;
 import edu.dwes.PI_Raul_Lara_Back.model.dto.UsuarioDTO;
 import edu.dwes.PI_Raul_Lara_Back.model.entities.Rol;
+import edu.dwes.PI_Raul_Lara_Back.model.entities.Transaccion;
 import edu.dwes.PI_Raul_Lara_Back.model.entities.Usuario;
 import edu.dwes.PI_Raul_Lara_Back.repository.IRolRepository;
 import edu.dwes.PI_Raul_Lara_Back.repository.IUsuarioRepository;
@@ -125,6 +127,16 @@ public class UsuarioServiceImpl implements IUsuarioService, UserDetailsService {
     @Override
     public boolean existsByUsername(String username) {
         return usuarioRepo.existsByUsername(username);
+    }
+
+    @Override
+    public List<TransaccionDTO> findAllAnuncios(String email) throws NonExistentException {
+        Usuario usuario = usuarioRepo.findByEmail(email)
+                .orElseThrow(() -> new NonExistentException("El usuario no existe"));
+
+        List<Transaccion> lista = usuarioRepo.findTransaccionesByUsuarioEmail(email);
+
+        return lista.stream().map(TransaccionDTO::new).toList();
     }
 
 }

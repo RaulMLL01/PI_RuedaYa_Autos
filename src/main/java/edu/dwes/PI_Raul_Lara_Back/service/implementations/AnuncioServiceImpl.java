@@ -14,6 +14,7 @@ import edu.dwes.PI_Raul_Lara_Back.model.dto.AnuncioDTO;
 import edu.dwes.PI_Raul_Lara_Back.model.entities.Anuncio;
 import edu.dwes.PI_Raul_Lara_Back.model.entities.Vehiculo;
 import edu.dwes.PI_Raul_Lara_Back.repository.IAnuncioRepository;
+import edu.dwes.PI_Raul_Lara_Back.repository.ITransaccionRepository;
 import edu.dwes.PI_Raul_Lara_Back.repository.IVehiculoRepository;
 import edu.dwes.PI_Raul_Lara_Back.service.DTOConverter;
 import edu.dwes.PI_Raul_Lara_Back.service.IAnuncioService;
@@ -25,6 +26,8 @@ public class AnuncioServiceImpl implements IAnuncioService {
     private IAnuncioRepository anuncioRepo;
     @Autowired
     private IVehiculoRepository vehiculoRepo;
+    @Autowired
+    private ITransaccionRepository transaccionRepo;
     @Autowired
     private DTOConverter converter;
 
@@ -51,13 +54,30 @@ public class AnuncioServiceImpl implements IAnuncioService {
 
     @Override
     public List<AnuncioDTO> findAllDTO() {
-        return findAll().stream().map(converter::toDTO).collect(Collectors.toList());
+        return anuncioRepo.findAll().stream()
+                .map(a -> {
+                    AnuncioDTO dto = converter.toDTO(a);
+
+                    // Obtener el vendedor
+                    Long vendedorId = transaccionRepo.findVendedorIdByAnuncioId(a.getId());
+                    dto.setVendedorId(vendedorId);
+
+                    return dto;
+                })
+                .toList();
     }
 
     @Override
-    public AnuncioDTO findDTOById(Long id) throws NonExistentException {
-        Anuncio a = anuncioRepo.findById(id).orElseThrow(() -> new NonExistentException("Anuncio no encontrado"));
-        return converter.toDTO(a);
+    public AnuncioDTO findDTOById(Long id) {
+        Anuncio a = anuncioRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Anuncio no encontrado"));
+
+        AnuncioDTO dto = converter.toDTO(a);
+
+        Long vendedorId = transaccionRepo.findVendedorIdByAnuncioId(id);
+        dto.setVendedorId(vendedorId);
+
+        return dto;
     }
 
     @Override

@@ -27,7 +27,7 @@ public class Mensaje {
     @Column(name = "fecha_envio")
     private LocalDateTime fechaEnvio;
 
-    @Transient
+    @Column(name = "leido", nullable = false)
     private Boolean leido = false;
 
     public Mensaje() {

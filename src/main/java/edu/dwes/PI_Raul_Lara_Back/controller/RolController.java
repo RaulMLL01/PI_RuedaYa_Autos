@@ -1,8 +1,6 @@
 package edu.dwes.PI_Raul_Lara_Back.controller;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,7 +37,6 @@ public class RolController {
         try {
             return ResponseEntity.ok(service.findById(id));
         } catch (NonExistentException e) {
-            // TODO Auto-generated catch block
             return ResponseEntity.notFound().build();
         }
     }
@@ -54,7 +51,6 @@ public class RolController {
         try {
             return ResponseEntity.ok(service.update(id, dto));
         } catch (NonExistentException e) {
-            // TODO Auto-generated catch block
             return ResponseEntity.notFound().build();
         }
     }

@@ -2,6 +2,7 @@ package edu.dwes.PI_Raul_Lara_Back.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +16,8 @@ import edu.dwes.PI_Raul_Lara_Back.service.IAnuncioService;
 @CrossOrigin(origins = "*")
 public class AnuncioController {
 
-    private final IAnuncioService anuncioService;
-
-    public AnuncioController(IAnuncioService anuncioService) {
-        this.anuncioService = anuncioService;
-    }
+    @Autowired
+    private IAnuncioService anuncioService;
 
     @GetMapping("/listado")
     public ResponseEntity<List<AnuncioDTO>> listarAnuncios() {

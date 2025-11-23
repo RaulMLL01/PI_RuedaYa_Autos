@@ -6,7 +6,7 @@ public class AnuncioDTO {
     private Long id;
     private String fechaPublicacion;
     private String estado;
-
+    private Long vendedorId;
     private Long vehiculoId;
     private String marca;
     private String modelo;
@@ -80,4 +80,13 @@ public class AnuncioDTO {
     public void setImagenes(List<String> imagenes) {
         this.imagenes = imagenes;
     }
+
+    public Long getVendedorId() {
+        return vendedorId;
+    }
+
+    public void setVendedorId(Long vendedorId) {
+        this.vendedorId = vendedorId;
+    }
+
 }

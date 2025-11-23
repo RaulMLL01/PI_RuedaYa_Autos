@@ -30,7 +30,6 @@ public class VehiculoController {
         try {
             return ResponseEntity.ok(vehiculoService.findDTOById(id));
         } catch (NonExistentException e) {
-            // TODO Auto-generated catch block
             return ResponseEntity.notFound().build();
         }
     }
@@ -45,7 +44,6 @@ public class VehiculoController {
         try {
             return ResponseEntity.ok(vehiculoService.updateFromDTO(id, dto));
         } catch (NonExistentException e) {
-            // TODO Auto-generated catch block
             return ResponseEntity.notFound().build();
         }
     }
