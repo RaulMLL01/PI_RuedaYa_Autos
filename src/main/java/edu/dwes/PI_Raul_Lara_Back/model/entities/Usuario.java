@@ -42,17 +42,17 @@ public class Usuario {
     @Column(name = "fecha_registro")
     private LocalDate fechaRegistro;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "id_rol", nullable = false)
     private Rol rol;
 
-    @OneToMany(mappedBy = "vendedor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "vendedor", cascade = CascadeType.ALL)
     private List<Transaccion> transacciones;
 
-    @OneToMany(mappedBy = "emisor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "emisor", cascade = CascadeType.ALL)
     private List<Mensaje> mensajesEnviados;
 
-    @OneToMany(mappedBy = "receptor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "receptor", cascade = CascadeType.ALL)
     private List<Mensaje> mensajesRecibidos;
 
     public Usuario() {

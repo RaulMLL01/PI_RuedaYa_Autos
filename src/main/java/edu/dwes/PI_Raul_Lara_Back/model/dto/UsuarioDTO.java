@@ -1,25 +1,28 @@
 package edu.dwes.PI_Raul_Lara_Back.model.dto;
 
 public class UsuarioDTO {
-
     private Long id;
     private String username;
+    private String nombre;
+    private String password;
     private String email;
     private String telefono;
     private String fechaRegistro;
-    private String rolName;
+    private String rol;
 
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(Long id, String username, String email, String telefono, String fechaRegistro,
-            String rolName) {
+    public UsuarioDTO(Long id, String username, String nombre, String email, String telefono, String fechaRegistro,
+            String rol, String password) {
         this.id = id;
         this.username = username;
+        this.nombre = nombre;
         this.email = email;
         this.telefono = telefono;
         this.fechaRegistro = fechaRegistro;
-        this.rolName = rolName;
+        this.rol = rol;
+        this.password = password;
     }
 
     public Long getId() {
@@ -30,12 +33,20 @@ public class UsuarioDTO {
         this.id = id;
     }
 
-    public String getusername() {
+    public String getUsername() {
         return username;
     }
 
-    public void setusername(String username) {
+    public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getEmail() {
@@ -62,11 +73,20 @@ public class UsuarioDTO {
         this.fechaRegistro = fechaRegistro;
     }
 
-    public String getrolName() {
-        return rolName;
+    public String getRol() {
+        return rol;
     }
 
-    public void setrolName(String rolName) {
-        this.rolName = rolName;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 }

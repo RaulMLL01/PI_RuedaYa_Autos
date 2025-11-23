@@ -1,53 +1,69 @@
 package edu.dwes.PI_Raul_Lara_Back.controller;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import edu.dwes.PI_Raul_Lara_Back.exceptions.NonExistentException;
 import edu.dwes.PI_Raul_Lara_Back.model.dto.AnuncioDTO;
-import edu.dwes.PI_Raul_Lara_Back.model.entities.Anuncio;
-import edu.dwes.PI_Raul_Lara_Back.service.DTOConverter;
 import edu.dwes.PI_Raul_Lara_Back.service.IAnuncioService;
 
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/anuncios")
+@CrossOrigin(origins = "*")
 public class AnuncioController {
 
-    @Autowired
-    private IAnuncioService AnuncioService;
+    private final IAnuncioService anuncioService;
 
-    @GetMapping
-    public List<AnuncioDTO> listarAnuncios() {
-        return AnuncioService.findAll()
-                .stream()
-                .map(DTOConverter::toDTO)
-                .collect(Collectors.toList());
+    public AnuncioController(IAnuncioService anuncioService) {
+        this.anuncioService = anuncioService;
+    }
+
+    @GetMapping("/listado")
+    public ResponseEntity<List<AnuncioDTO>> listarAnuncios() {
+        return ResponseEntity.ok(anuncioService.findAllDTO());
     }
 
     @GetMapping("/{id}")
-    public Optional<Anuncio> obtenerAnuncio(@PathVariable Long id) {
-        return AnuncioService.findById(id);
+    public ResponseEntity<AnuncioDTO> obtenerAnuncio(@PathVariable Long id) {
+        AnuncioDTO dto;
+        try {
+            dto = anuncioService.findDTOById(id);
+            return ResponseEntity.ok(dto);
+        } catch (NonExistentException e) {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     @PostMapping
-    public Anuncio guardarAnuncio(@RequestBody Anuncio Anuncio) {
-        return AnuncioService.save(Anuncio);
+    public ResponseEntity<AnuncioDTO> guardarAnuncio(@RequestBody AnuncioDTO dto) {
+        AnuncioDTO saved;
+        try {
+            saved = anuncioService.createFromDTO(dto);
+        } catch (NonExistentException e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AnuncioDTO> actualizarAnuncio(@PathVariable Long id, @RequestBody AnuncioDTO dto) {
+        AnuncioDTO updated;
+        try {
+            updated = anuncioService.updateFromDTO(id, dto);
+            return ResponseEntity.ok(updated);
+        } catch (NonExistentException e) {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     @DeleteMapping("/{id}")
-    public void eliminarAnuncio(@PathVariable Long id) {
-        AnuncioService.deleteById(id);
+    public ResponseEntity<Void> eliminarAnuncio(@PathVariable Long id) {
+        anuncioService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
-
 }

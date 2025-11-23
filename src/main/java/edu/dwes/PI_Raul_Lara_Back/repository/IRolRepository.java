@@ -8,4 +8,6 @@ import edu.dwes.PI_Raul_Lara_Back.model.entities.Rol;
 @Repository
 public interface IRolRepository extends JpaRepository<Rol, Long> {
     Rol findByNombre(String nombre);
+
+    boolean existsByNombre(String nombre);
 }

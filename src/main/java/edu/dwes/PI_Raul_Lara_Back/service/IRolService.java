@@ -1,19 +1,21 @@
 package edu.dwes.PI_Raul_Lara_Back.service;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 
-import edu.dwes.PI_Raul_Lara_Back.model.entities.Rol;
+import edu.dwes.PI_Raul_Lara_Back.exceptions.NonExistentException;
+import edu.dwes.PI_Raul_Lara_Back.model.dto.RolDTO;
 
 @Service
 public interface IRolService {
-    List<Rol> findAll();
+    List<RolDTO> findAll();
 
-    Optional<Rol> findById(Long id);
+    RolDTO findById(Long id) throws NonExistentException;
 
-    Rol save(Rol r);
+    RolDTO create(RolDTO dto);
 
-    void deleteById(Long id);
+    RolDTO update(Long id, RolDTO dto) throws NonExistentException;
+
+    void delete(Long id);
+
 }

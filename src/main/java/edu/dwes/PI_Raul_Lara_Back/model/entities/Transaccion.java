@@ -11,12 +11,12 @@ public class Transaccion {
     @EmbeddedId
     private TransaccionId id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @MapsId("vendedorId")
     @JoinColumn(name = "id_vendedor", nullable = false)
     private Usuario vendedor;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @MapsId("anuncioId")
     @JoinColumn(name = "id_anuncio", nullable = false)
     private Anuncio anuncio;

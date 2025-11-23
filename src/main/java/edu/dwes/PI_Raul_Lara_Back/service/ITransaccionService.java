@@ -1,20 +1,21 @@
+
 package edu.dwes.PI_Raul_Lara_Back.service;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import edu.dwes.PI_Raul_Lara_Back.model.entities.Transaccion;
+import edu.dwes.PI_Raul_Lara_Back.exceptions.NonExistentException;
+import edu.dwes.PI_Raul_Lara_Back.model.dto.TransaccionDTO;
 
 @Service
 public interface ITransaccionService {
-    List<Transaccion> findAll();
 
-    Optional<Transaccion> findById(Long idv, Long ida, LocalDate fecha);
+    List<TransaccionDTO> findAllDTO();
 
-    Transaccion save(Transaccion t);
+    TransaccionDTO findDTO(Long anuncioId, Long usuarioId, String fecha) throws NonExistentException;
 
-    void deleteById(Long idv, Long ida, LocalDate fecha);
+    TransaccionDTO createFromDTO(TransaccionDTO dto) throws NonExistentException;
+
+    void delete(Long anuncioId, Long usuarioId, String fecha);
 }

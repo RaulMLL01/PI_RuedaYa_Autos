@@ -47,5 +47,4 @@ public class TransaccionDTO {
     public void setFechaMovimiento(String fechaMovimiento) {
         this.fechaMovimiento = fechaMovimiento;
     }
-
 }

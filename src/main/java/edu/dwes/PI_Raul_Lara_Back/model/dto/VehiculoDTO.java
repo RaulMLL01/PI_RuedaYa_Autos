@@ -1,24 +1,24 @@
 package edu.dwes.PI_Raul_Lara_Back.model.dto;
 
 public class VehiculoDTO {
-
     private Long id;
     private String marca;
     private String modelo;
-    private String fecha;
+    private String fechaFabricacion;
     private String tipo;
-    private double precio_estimado;
+    private Double precioEstimado;
 
     public VehiculoDTO() {
     }
 
-    public VehiculoDTO(Long id, String marca, String modelo, String fecha, String tipo, double precio_estimado) {
+    public VehiculoDTO(Long id, String marca, String modelo, String fechaFabricacion, String tipo,
+            Double precioEstimado) {
         this.id = id;
         this.marca = marca;
         this.modelo = modelo;
-        this.fecha = fecha;
+        this.fechaFabricacion = fechaFabricacion;
         this.tipo = tipo;
-        this.precio_estimado = precio_estimado;
+        this.precioEstimado = precioEstimado;
     }
 
     public Long getId() {
@@ -45,12 +45,12 @@ public class VehiculoDTO {
         this.modelo = modelo;
     }
 
-    public String getFecha() {
-        return fecha;
+    public String getFechaFabricacion() {
+        return fechaFabricacion;
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public void setFechaFabricacion(String fechaFabricacion) {
+        this.fechaFabricacion = fechaFabricacion;
     }
 
     public String getTipo() {
@@ -61,12 +61,11 @@ public class VehiculoDTO {
         this.tipo = tipo;
     }
 
-    public double getPrecio_estimado() {
-        return precio_estimado;
+    public Double getPrecioEstimado() {
+        return precioEstimado;
     }
 
-    public void setPrecio_estimado(double precio_estimado) {
-        this.precio_estimado = precio_estimado;
+    public void setPrecioEstimado(Double precioEstimado) {
+        this.precioEstimado = precioEstimado;
     }
-
 }

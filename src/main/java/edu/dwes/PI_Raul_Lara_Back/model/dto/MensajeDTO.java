@@ -10,14 +10,6 @@ public class MensajeDTO {
     public MensajeDTO() {
     }
 
-    public MensajeDTO(Long id, Long emisorId, Long receptorId, String contenido, String fechaEnvio) {
-        this.id = id;
-        this.emisorId = emisorId;
-        this.receptorId = receptorId;
-        this.contenido = contenido;
-        this.fechaEnvio = fechaEnvio;
-    }
-
     public Long getId() {
         return id;
     }
@@ -57,5 +49,4 @@ public class MensajeDTO {
     public void setFechaEnvio(String fechaEnvio) {
         this.fechaEnvio = fechaEnvio;
     }
-
 }

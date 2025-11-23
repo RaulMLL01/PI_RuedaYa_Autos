@@ -13,11 +13,11 @@ public class Mensaje {
     @Column(name = "id_mensaje")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "id_emisor", nullable = false)
     private Usuario emisor;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "id_receptor", nullable = false)
     private Usuario receptor;
 

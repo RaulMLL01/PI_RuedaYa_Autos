@@ -1,58 +1,55 @@
+
 package edu.dwes.PI_Raul_Lara_Back.controller;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import edu.dwes.PI_Raul_Lara_Back.exceptions.NonExistentException;
 import edu.dwes.PI_Raul_Lara_Back.model.dto.TransaccionDTO;
-import edu.dwes.PI_Raul_Lara_Back.model.entities.Transaccion;
-import edu.dwes.PI_Raul_Lara_Back.service.DTOConverter;
 import edu.dwes.PI_Raul_Lara_Back.service.ITransaccionService;
 
 @RestController
-@RequestMapping("/tra")
+@RequestMapping("/transacciones")
+@CrossOrigin
 public class TransaccionController {
 
-    @Autowired
-    private ITransaccionService service;
+    private final ITransaccionService service;
 
-    @GetMapping
-    public List<TransaccionDTO> listarTransaccion() {
-        return service.findAll()
-                .stream()
-                .map(DTOConverter::toDTO)
-                .collect(Collectors.toList());
+    public TransaccionController(ITransaccionService s) {
+        this.service = s;
     }
 
-    @GetMapping("/usuario/{usuarioId}/producto/{productoId}/fecha/{fecha}")
-    public Optional<Transaccion> obtenerTransaccion(
-            @PathVariable Long usuarioId,
-            @PathVariable Long productoId,
+    @GetMapping
+    public ResponseEntity<List<TransaccionDTO>> list() {
+        return ResponseEntity.ok(service.findAllDTO());
+    }
+
+    @GetMapping("/{anuncioId}/{usuarioId}/{fecha}")
+    public ResponseEntity<TransaccionDTO> get(@PathVariable Long anuncioId, @PathVariable Long usuarioId,
             @PathVariable String fecha) {
-        return service.findById(usuarioId, productoId, LocalDate.parse(fecha));
+        try {
+            return ResponseEntity.ok(service.findDTO(anuncioId, usuarioId, fecha));
+        } catch (NonExistentException e) {
+            // TODO Auto-generated catch block
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
-    public Transaccion guardarTransaccion(@RequestBody Transaccion transaccion) {
-        return service.save(transaccion);
+    public ResponseEntity<TransaccionDTO> create(@RequestBody TransaccionDTO dto) {
+        try {
+            return ResponseEntity.status(201).body(service.createFromDTO(dto));
+        } catch (NonExistentException e) {
+            // TODO Auto-generated catch block
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @DeleteMapping("/usuario/{usuarioId}/producto/{productoId}")
-    public void eliminarTransaccion(
-            @PathVariable Long usuarioId,
-            @PathVariable Long productoId,
+    @DeleteMapping("/{anuncioId}/{usuarioId}/{fecha}")
+    public ResponseEntity<Void> delete(@PathVariable Long anuncioId, @PathVariable Long usuarioId,
             @PathVariable String fecha) {
-
-        service.deleteById(usuarioId, productoId, LocalDate.parse(fecha));
+        service.delete(anuncioId, usuarioId, fecha);
+        return ResponseEntity.noContent().build();
     }
 }

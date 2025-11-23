@@ -1,24 +1,20 @@
 package edu.dwes.PI_Raul_Lara_Back.model.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AnuncioDTO {
     private Long id;
     private String fechaPublicacion;
     private String estado;
+
+    private Long vehiculoId;
+    private String marca;
+    private String modelo;
+    private String combustible;
+
     private List<String> imagenes;
-    private VehiculoDTO vehiculo;
 
     public AnuncioDTO() {
-    }
-
-    public AnuncioDTO(Long id, String fechaPublicacion, String estado, VehiculoDTO vehiculo) {
-        this.id = id;
-        this.fechaPublicacion = fechaPublicacion;
-        this.estado = estado;
-        this.imagenes = new ArrayList<>();
-        this.vehiculo = vehiculo;
     }
 
     public Long getId() {
@@ -45,6 +41,38 @@ public class AnuncioDTO {
         this.estado = estado;
     }
 
+    public Long getVehiculoId() {
+        return vehiculoId;
+    }
+
+    public void setVehiculoId(Long vehiculoId) {
+        this.vehiculoId = vehiculoId;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public String getCombustible() {
+        return combustible;
+    }
+
+    public void setCombustible(String combustible) {
+        this.combustible = combustible;
+    }
+
     public List<String> getImagenes() {
         return imagenes;
     }
@@ -52,13 +80,4 @@ public class AnuncioDTO {
     public void setImagenes(List<String> imagenes) {
         this.imagenes = imagenes;
     }
-
-    public VehiculoDTO getVehiculo() {
-        return vehiculo;
-    }
-
-    public void setVehiculo(VehiculoDTO vehiculo) {
-        this.vehiculo = vehiculo;
-    }
-
 }

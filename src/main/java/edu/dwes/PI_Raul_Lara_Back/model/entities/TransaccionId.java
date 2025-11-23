@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Embeddable
 public class TransaccionId implements Serializable {
 
@@ -13,6 +15,7 @@ public class TransaccionId implements Serializable {
     @Column(name = "id_anuncio")
     private Long anuncioId;
 
+    @DateTimeFormat
     @Column(name = "fecha_publicacion")
     private LocalDate fechaPublicacion;
 

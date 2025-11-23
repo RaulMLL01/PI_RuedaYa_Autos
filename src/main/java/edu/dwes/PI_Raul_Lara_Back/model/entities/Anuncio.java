@@ -31,7 +31,7 @@ public class Anuncio {
     @OneToOne(mappedBy = "anuncio", cascade = CascadeType.ALL)
     private Transaccion transaccion;
 
-    @OneToMany(mappedBy = "anuncio", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "anuncio", cascade = CascadeType.ALL)
     private List<Imagen> imagenes = new ArrayList<>();
 
     public Anuncio() {

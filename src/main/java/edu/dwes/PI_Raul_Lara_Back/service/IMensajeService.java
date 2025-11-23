@@ -1,20 +1,24 @@
 package edu.dwes.PI_Raul_Lara_Back.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import edu.dwes.PI_Raul_Lara_Back.model.entities.Mensaje;
+import edu.dwes.PI_Raul_Lara_Back.exceptions.NonExistentException;
+import edu.dwes.PI_Raul_Lara_Back.model.dto.MensajeDTO;
 
 @Service
 public interface IMensajeService {
 
-    List<Mensaje> findAll();
+    List<MensajeDTO> findAll();
 
-    Optional<Mensaje> findById(Long id);
+    MensajeDTO findById(Long id) throws NonExistentException;
 
-    Mensaje save(Mensaje m);
+    MensajeDTO enviarMensaje(MensajeDTO dto) throws NonExistentException;
 
-    void deleteById(Long id);
+    MensajeDTO actualizarContenido(Long id, String nuevoContenido) throws NonExistentException;
+
+    void eliminar(Long id);
+
+    List<MensajeDTO> mensajesEntreUsuarios(Long idEmisor, Long idReceptor) throws NonExistentException;
 }

@@ -17,7 +17,7 @@ public class Rol {
     @Column(name = "nombre_rol", nullable = false, unique = true, length = 50)
     private String nombre;
 
-    @OneToMany(mappedBy = "rol", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "rol", cascade = CascadeType.ALL)
     private List<Usuario> usuarios;
 
     public Rol() {
