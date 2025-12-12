@@ -14,6 +14,8 @@ public class MensajeDTO {
     private String contenido;
     private String fechaEnvio;
 
+    private boolean leido;
+
     public MensajeDTO() {
     }
 
@@ -87,6 +89,14 @@ public class MensajeDTO {
 
     public void setReceptorNombre(String receptorNombre) {
         this.receptorNombre = receptorNombre;
+    }
+
+    public boolean isLeido() {
+        return leido;
+    }
+
+    public void setLeido(boolean leido) {
+        this.leido = leido;
     }
 
 }

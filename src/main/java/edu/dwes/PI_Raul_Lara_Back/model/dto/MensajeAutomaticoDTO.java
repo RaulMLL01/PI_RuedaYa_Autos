@@ -2,41 +2,41 @@ package edu.dwes.PI_Raul_Lara_Back.model.dto;
 
 public class MensajeAutomaticoDTO {
 
-    private String para;
-    private String asunto;
-    private String cuerpo;
+    private String email;
+    private String nombre;
+    private String mensaje;
 
     public MensajeAutomaticoDTO() {
     }
 
-    public MensajeAutomaticoDTO(String para, String asunto, String cuerpo) {
-        this.para = para;
-        this.asunto = asunto;
-        this.cuerpo = cuerpo;
+    public MensajeAutomaticoDTO(String email, String nombre, String mensaje) {
+        this.email = email;
+        this.nombre = nombre;
+        this.mensaje = mensaje;
     }
 
-    public String getPara() {
-        return para;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPara(String para) {
-        this.para = para;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getAsunto() {
-        return asunto;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setAsunto(String asunto) {
-        this.asunto = asunto;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getCuerpo() {
-        return cuerpo;
+    public String getMensaje() {
+        return mensaje;
     }
 
-    public void setCuerpo(String cuerpo) {
-        this.cuerpo = cuerpo;
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
     }
 
 }

@@ -11,7 +11,9 @@ public class AnuncioDTO {
     private String marca;
     private String modelo;
     private String combustible;
-
+    private double precio;
+    private String descripcion;
+    private Integer kilometros;
     private List<String> imagenes;
 
     public AnuncioDTO() {
@@ -87,6 +89,30 @@ public class AnuncioDTO {
 
     public void setVendedorId(Long vendedorId) {
         this.vendedorId = vendedorId;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Integer getKilometros() {
+        return kilometros;
+    }
+
+    public void setKilometros(Integer kilometros) {
+        this.kilometros = kilometros;
     }
 
 }

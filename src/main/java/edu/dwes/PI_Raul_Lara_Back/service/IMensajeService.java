@@ -26,4 +26,6 @@ public interface IMensajeService {
 
     Long countMensajesNoLeidos(String email);
 
+    void marcarComoLeido(Long id);
+
 }

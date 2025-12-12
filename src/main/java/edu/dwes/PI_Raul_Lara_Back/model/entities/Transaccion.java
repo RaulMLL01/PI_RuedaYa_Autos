@@ -8,51 +8,67 @@ import java.time.LocalDate;
 @Table(name = "transaccion")
 public class Transaccion {
 
-    @EmbeddedId
-    private TransaccionId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_transaccion")
+    private Long id;
 
-    @ManyToOne()
-    @MapsId("vendedorId")
+    @ManyToOne
     @JoinColumn(name = "id_vendedor", nullable = false)
     private Usuario vendedor;
 
-    @ManyToOne()
-    @MapsId("anuncioId")
+    @ManyToOne
+    @JoinColumn(name = "id_comprador", nullable = false)
+    private Usuario comprador;
+
+    @ManyToOne
     @JoinColumn(name = "id_anuncio", nullable = false)
     private Anuncio anuncio;
 
-    @Column(name = "tipo_transaccion", nullable = false, length = 20)
-    private String tipoTransaccion;
+    @Column(name = "tipo_transaccion")
+    private String tipo;
 
     @Column(name = "fecha_movimiento")
     private LocalDate fechaMovimiento;
 
-    @Column(name = "precio")
     private Double precio;
-
-    @Column(name = "duracion_alquiler")
     private Integer duracionAlquiler;
 
     public Transaccion() {
     }
 
-    public Transaccion(TransaccionId id, Usuario vendedor, Anuncio anuncio, String tipoTransaccion,
-            LocalDate fechaMovimiento, Double precio, Integer duracionAlquiler) {
+    public Transaccion(Long id, Usuario vendedor, Anuncio anuncio, String tipoTransaccion, Double precio,
+            Integer duracionAlquiler) {
         this.id = id;
         this.vendedor = vendedor;
         this.anuncio = anuncio;
-        this.tipoTransaccion = tipoTransaccion;
-        this.fechaMovimiento = fechaMovimiento;
+        this.tipo = tipoTransaccion;
         this.precio = precio;
         this.duracionAlquiler = duracionAlquiler;
     }
 
-    public TransaccionId getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(TransaccionId id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public Usuario getComprador() {
+        return comprador;
+    }
+
+    public void setComprador(Usuario comprador) {
+        this.comprador = comprador;
+    }
+
+    public LocalDate getFechaMovimiento() {
+        return fechaMovimiento;
+    }
+
+    public void setFechaMovimiento(LocalDate fechaMovimiento) {
+        this.fechaMovimiento = fechaMovimiento;
     }
 
     public Usuario getVendedor() {
@@ -79,20 +95,12 @@ public class Transaccion {
         this.anuncio = anuncio;
     }
 
-    public String getTipoTransaccion() {
-        return tipoTransaccion;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setTipoTransaccion(String tipoTransaccion) {
-        this.tipoTransaccion = tipoTransaccion;
-    }
-
-    public LocalDate getFechaMovimiento() {
-        return fechaMovimiento;
-    }
-
-    public void setFechaMovimiento(LocalDate fechaMovimiento) {
-        this.fechaMovimiento = fechaMovimiento;
+    public void setTipo(String tipoTransaccion) {
+        this.tipo = tipoTransaccion;
     }
 
     public Integer getDuracionAlquiler() {
@@ -127,4 +135,5 @@ public class Transaccion {
             return false;
         return true;
     }
+
 }

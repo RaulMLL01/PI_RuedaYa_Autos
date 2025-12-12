@@ -2,7 +2,6 @@ package edu.dwes.PI_Raul_Lara_Back.service.implementations;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +19,13 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class MensajeServiceImpl implements IMensajeService {
+
     @Autowired
     private IMensajeRepository mensajeRepository;
+
     @Autowired
     private IUsuarioRepository repo;
+
     @Autowired
     private DTOConverter converter;
 
@@ -46,17 +48,33 @@ public class MensajeServiceImpl implements IMensajeService {
     @Transactional
     public MensajeDTO enviarMensaje(MensajeDTO dto) throws NonExistentException {
 
+        // --- VALIDACIONES ---
+        if (dto.getEmisorId() == null) {
+            throw new IllegalArgumentException("El ID del emisor no puede ser nulo");
+        }
+
+        if (dto.getReceptorId() == null) {
+            throw new IllegalArgumentException("El ID del receptor no puede ser nulo");
+        }
+
+        if (dto.getContenido() == null || dto.getContenido().trim().isEmpty()) {
+            throw new IllegalArgumentException("El contenido del mensaje no puede estar vacío");
+        }
+
+        // --- OBTENER USUARIOS ---
         Usuario emisor = repo.findById(dto.getEmisorId())
                 .orElseThrow(() -> new NonExistentException("Emisor no encontrado"));
 
         Usuario receptor = repo.findById(dto.getReceptorId())
                 .orElseThrow(() -> new NonExistentException("Receptor no encontrado"));
 
+        // --- CREAR MENSAJE ---
         Mensaje m = new Mensaje();
         m.setEmisor(emisor);
         m.setReceptor(receptor);
         m.setContenido(dto.getContenido());
         m.setFechaEnvio(LocalDateTime.now());
+        m.setLeido(false);
 
         return converter.toDTO(mensajeRepository.save(m));
     }
@@ -64,32 +82,26 @@ public class MensajeServiceImpl implements IMensajeService {
     @Override
     @Transactional
     public MensajeDTO actualizarContenido(Long id, String nuevoContenido) throws NonExistentException {
-
         Mensaje m = mensajeRepository.findById(id)
                 .orElseThrow(() -> new NonExistentException("Mensaje no encontrado"));
 
         m.setContenido(nuevoContenido);
-
         return converter.toDTO(mensajeRepository.save(m));
     }
 
     @Override
     @Transactional
     public void eliminar(Long id) {
-        if (!repo.existsById(id)) {
+        if (!mensajeRepository.existsById(id)) {
             return;
         }
-        repo.deleteById(id);
+        mensajeRepository.deleteById(id);
     }
 
     @Override
-    public List<MensajeDTO> mensajesEntreUsuarios(Long idEmisor, Long idReceptor) throws NonExistentException {
+    public List<MensajeDTO> mensajesEntreUsuarios(Long idEmisor, Long idReceptor) {
 
-        Usuario emisor = mensajeRepository.findEmisorByMensajeId(idReceptor);
-
-        Usuario receptor = mensajeRepository.findReceptorByMensajeId(idReceptor);
-
-        List<Mensaje> mensajes = mensajeRepository.findByEmisorAndReceptor(emisor, receptor);
+        List<Mensaje> mensajes = mensajeRepository.findConversacion(idEmisor, idReceptor);
 
         return mensajes.stream()
                 .map(converter::toDTO)
@@ -98,7 +110,6 @@ public class MensajeServiceImpl implements IMensajeService {
 
     @Override
     public List<MensajeDTO> findAllForUser(String email) throws NonExistentException {
-
         Usuario usuario = repo.findByEmail(email)
                 .orElseThrow(() -> new NonExistentException("Usuario no encontrado"));
 
@@ -111,6 +122,22 @@ public class MensajeServiceImpl implements IMensajeService {
 
     public Long countMensajesNoLeidos(String email) {
         return mensajeRepository.countByReceptorEmailAndLeidoFalse(email);
+    }
+
+    @Override
+    @Transactional
+    public void marcarComoLeido(Long id) {
+        Mensaje m = null;
+        try {
+            m = mensajeRepository.findById(id)
+                    .orElseThrow(() -> new NonExistentException("Mensaje no encontrado"));
+        } catch (NonExistentException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        m.setLeido(true);
+        mensajeRepository.save(m);
     }
 
 }

@@ -23,5 +23,11 @@ public interface IMensajeRepository extends JpaRepository<Mensaje, Long> {
     @Query("SELECT m FROM Mensaje m WHERE m.emisor = :usuario OR m.receptor = :usuario ORDER BY m.fechaEnvio DESC")
     List<Mensaje> findAllByUsuario(@Param("usuario") Usuario usuario);
 
+    long countByReceptor(Usuario receptor);
+
     Long countByReceptorEmailAndLeidoFalse(String email);
+
+    @Query("SELECT m FROM Mensaje m WHERE (m.emisor.id = :id1 AND m.receptor.id = :id2) OR (m.emisor.id = :id2 AND m.receptor.id = :id1) ORDER BY m.fechaEnvio ASC")
+    List<Mensaje> findConversacion(@Param("id1") Long id1, @Param("id2") Long id2);
+
 }

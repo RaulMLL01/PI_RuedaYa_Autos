@@ -6,9 +6,9 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import edu.dwes.PI_Raul_Lara_Back.exceptions.NonExistentException;
-import edu.dwes.PI_Raul_Lara_Back.model.dto.TransaccionDTO;
+import edu.dwes.PI_Raul_Lara_Back.model.dto.AnuncioDTO;
+import edu.dwes.PI_Raul_Lara_Back.model.dto.RegistroDTO;
 import edu.dwes.PI_Raul_Lara_Back.model.dto.UsuarioDTO;
-import edu.dwes.PI_Raul_Lara_Back.model.entities.Transaccion;
 import edu.dwes.PI_Raul_Lara_Back.model.entities.Usuario;
 
 @Service
@@ -25,7 +25,7 @@ public interface IUsuarioService {
 
     UsuarioDTO findDTOById(Long id) throws NonExistentException;
 
-    UsuarioDTO createFromDTO(UsuarioDTO dto);
+    UsuarioDTO createFromDTO(RegistroDTO dto);
 
     UsuarioDTO updateFromDTO(Long id, UsuarioDTO dto) throws NonExistentException;
 
@@ -33,5 +33,8 @@ public interface IUsuarioService {
 
     boolean existsByUsername(String username);
 
-    List<TransaccionDTO> findAllAnuncios(String email) throws NonExistentException;
+    List<AnuncioDTO> findAnunciosByUsuario(Long usuarioId) throws NonExistentException;
+
+    UsuarioDTO findPerfilByEmail(String email) throws NonExistentException;
+
 }

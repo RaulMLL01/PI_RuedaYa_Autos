@@ -79,4 +79,24 @@ public class MensajeController {
         }
     }
 
+    @PutMapping("/marcar-leido/{id}")
+    public ResponseEntity<?> marcarLeido(@PathVariable Long id) {
+        servicio.marcarComoLeido(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/conversacion")
+    public ResponseEntity<?> conversacion(
+            @RequestParam Long idEmisor,
+            @RequestParam Long idReceptor) {
+
+        try {
+            return ResponseEntity.ok(
+                    servicio.mensajesEntreUsuarios(idEmisor, idReceptor));
+        } catch (NonExistentException e) {
+            e.printStackTrace();
+            return ResponseEntity.ok().build();
+        }
+    }
+
 }

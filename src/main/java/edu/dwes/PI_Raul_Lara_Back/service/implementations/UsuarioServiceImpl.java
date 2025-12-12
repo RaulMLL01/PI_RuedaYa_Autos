@@ -9,16 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.dwes.PI_Raul_Lara_Back.exceptions.NonExistentException;
-import edu.dwes.PI_Raul_Lara_Back.model.dto.TransaccionDTO;
+import edu.dwes.PI_Raul_Lara_Back.model.dto.AnuncioDTO;
+import edu.dwes.PI_Raul_Lara_Back.model.dto.RegistroDTO;
 import edu.dwes.PI_Raul_Lara_Back.model.dto.UsuarioDTO;
+import edu.dwes.PI_Raul_Lara_Back.model.entities.Anuncio;
 import edu.dwes.PI_Raul_Lara_Back.model.entities.Rol;
-import edu.dwes.PI_Raul_Lara_Back.model.entities.Transaccion;
 import edu.dwes.PI_Raul_Lara_Back.model.entities.Usuario;
+import edu.dwes.PI_Raul_Lara_Back.repository.IAnuncioRepository;
 import edu.dwes.PI_Raul_Lara_Back.repository.IRolRepository;
 import edu.dwes.PI_Raul_Lara_Back.repository.IUsuarioRepository;
 import edu.dwes.PI_Raul_Lara_Back.service.DTOConverter;
@@ -30,12 +31,19 @@ public class UsuarioServiceImpl implements IUsuarioService, UserDetailsService {
 
     @Autowired
     private IUsuarioRepository usuarioRepo;
+
+    @Autowired
+    private IAnuncioRepository anuncioRepo;
+
     @Autowired
     private IRolRepository rolRepo;
+
     @Autowired
     private DTOConverter converter;
-    @Autowired
-    private PasswordEncoder encoder;
+
+    // ======================================
+    // BÁSICOS
+    // ======================================
 
     @Override
     public List<Usuario> findAll() {
@@ -54,69 +62,96 @@ public class UsuarioServiceImpl implements IUsuarioService, UserDetailsService {
 
     @Override
     public List<UsuarioDTO> findAllDTO() {
-        return findAll().stream().map(converter::toDTO).collect(Collectors.toList());
+        return usuarioRepo.findAll()
+                .stream()
+                .map(converter::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
     public UsuarioDTO findDTOById(Long id) throws NonExistentException {
-        Usuario u = usuarioRepo.findById(id).orElseThrow(() -> new NonExistentException("Usuario no encontrado"));
+        Usuario u = usuarioRepo.findById(id)
+                .orElseThrow(() -> new NonExistentException("Usuario no encontrado"));
         return converter.toDTO(u);
     }
 
+    // ======================================
+    // CREAR USUARIO
+    // ======================================
     @Override
     @Transactional
-    public UsuarioDTO createFromDTO(UsuarioDTO dto) throws IllegalArgumentException {
+    public UsuarioDTO createFromDTO(RegistroDTO dto) {
 
         Usuario u = new Usuario();
 
         // Datos básicos
         u.setUsername(dto.getUsername());
+        u.setPassword(dto.getPassword());
         u.setNombre(dto.getNombre());
         u.setEmail(dto.getEmail());
         u.setTelefono(dto.getTelefono());
-
-        // Fecha de registro SIEMPRE es ahora
         u.setFechaRegistro(LocalDate.now());
 
-        // Rol por defecto: USUARIO
         Rol rolUsuario = rolRepo.findByNombre("USUARIO");
-
         u.setRol(rolUsuario);
 
-        // Si manejas contraseñas aquí:
-        if (dto.getPassword() != null) {
-            u.setPassword(encoder.encode(dto.getPassword()));
-        } else {
-            throw new IllegalArgumentException("La contraseña no puede ser null");
-        }
-
         Usuario saved = usuarioRepo.save(u);
+
         return converter.toDTO(saved);
     }
 
+    // ======================================
+    // ACTUALIZAR USUARIO
+    // ======================================
     @Override
     @Transactional
     public UsuarioDTO updateFromDTO(Long id, UsuarioDTO dto) throws NonExistentException {
-        Usuario u = usuarioRepo.findById(id).orElseThrow(() -> new NonExistentException("Usuario no encontrado"));
+
+        Usuario u = usuarioRepo.findById(id)
+                .orElseThrow(() -> new NonExistentException("Usuario no encontrado"));
+
         u.setUsername(dto.getUsername());
         u.setNombre(dto.getNombre());
         u.setEmail(dto.getEmail());
         u.setTelefono(dto.getTelefono());
+
         usuarioRepo.save(u);
+
         return converter.toDTO(u);
     }
 
+    // ======================================
+    // LOGIN
+    // ======================================
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
         Usuario user = usuarioRepo.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + email));
 
-        return new UsuarioDetails(user); // devuelve un único rol
+        return new UsuarioDetails(user);
     }
 
     @Override
     public Usuario findByEmail(String email) {
+
         return usuarioRepo.findByEmail(email).orElse(null);
+    }
+
+    @Override
+    public UsuarioDTO findPerfilByEmail(String email) throws NonExistentException {
+
+        Usuario usuario = usuarioRepo.findByEmail(email)
+                .orElseThrow(() -> new NonExistentException("Usuario no encontrado"));
+
+        UsuarioDTO dto = converter.toDTO(usuario);
+
+        dto.setTotalAnuncios(usuario.getAnuncios().size());
+        dto.setTotalMensajes(
+                usuario.getMensajesEnviados().size() +
+                        usuario.getMensajesRecibidos().size());
+
+        return dto;
     }
 
     @Override
@@ -130,13 +165,16 @@ public class UsuarioServiceImpl implements IUsuarioService, UserDetailsService {
     }
 
     @Override
-    public List<TransaccionDTO> findAllAnuncios(String email) throws NonExistentException {
-        Usuario usuario = usuarioRepo.findByEmail(email)
-                .orElseThrow(() -> new NonExistentException("El usuario no existe"));
+    public List<AnuncioDTO> findAnunciosByUsuario(Long usuarioId) throws NonExistentException {
 
-        List<Transaccion> lista = usuarioRepo.findTransaccionesByUsuarioEmail(email);
+        Usuario usuario = usuarioRepo.findById(usuarioId)
+                .orElseThrow(() -> new NonExistentException("Usuario no encontrado"));
 
-        return lista.stream().map(TransaccionDTO::new).toList();
+        List<Anuncio> anuncios = anuncioRepo.findByVendedor(usuario);
+
+        return anuncios.stream()
+                .map(converter::toDTO)
+                .collect(Collectors.toList());
     }
 
 }

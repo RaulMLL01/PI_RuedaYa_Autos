@@ -17,7 +17,7 @@ public interface IAnuncioService {
 
     Anuncio save(Anuncio anuncio);
 
-    void deleteById(Long id);
+    void deleteById(Long id) throws NonExistentException;
 
     List<AnuncioDTO> findAllDTO();
 
@@ -26,4 +26,6 @@ public interface IAnuncioService {
     AnuncioDTO createFromDTO(AnuncioDTO dto) throws NonExistentException;
 
     AnuncioDTO updateFromDTO(Long id, AnuncioDTO dto) throws NonExistentException;
+
+    List<AnuncioDTO> findDisponibles();
 }

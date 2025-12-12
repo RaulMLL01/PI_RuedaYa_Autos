@@ -19,6 +19,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "usuario")
 public class Usuario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
@@ -27,32 +28,42 @@ public class Usuario {
     @Column(nullable = false, length = 40)
     private String username;
 
-    @Column(nullable = false, length = 100)
-    private String nombre;
-
-    @Column(nullable = false, unique = true, length = 100)
-    private String email;
-
     @Column(name = "passwd", nullable = false, length = 255)
     private String password;
+
+    @Column(nullable = false, length = 100)
+    private String nombre;
 
     @Column(length = 20)
     private String telefono;
 
+    @Column(nullable = false, unique = true, length = 100)
+    private String email;
+
     @Column(name = "fecha_registro")
     private LocalDate fechaRegistro;
 
-    @ManyToOne()
-    @JoinColumn(name = "id_rol", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "id_rol")
     private Rol rol;
 
-    @OneToMany(mappedBy = "vendedor", cascade = CascadeType.ALL)
-    private List<Transaccion> transacciones;
+    // Un usuario puede publicar muchos anuncios
+    @OneToMany(mappedBy = "vendedor")
+    private List<Anuncio> anuncios;
 
-    @OneToMany(mappedBy = "emisor", cascade = CascadeType.ALL)
+    // Transacciones donde este usuario fue comprador
+    @OneToMany(mappedBy = "comprador")
+    private List<Transaccion> compras;
+
+    // Transacciones donde este usuario fue vendedor
+    @OneToMany(mappedBy = "vendedor")
+    private List<Transaccion> ventas;
+
+    // Mensajes
+    @OneToMany(mappedBy = "emisor")
     private List<Mensaje> mensajesEnviados;
 
-    @OneToMany(mappedBy = "receptor", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "receptor")
     private List<Mensaje> mensajesRecibidos;
 
     public Usuario() {
@@ -69,7 +80,8 @@ public class Usuario {
         this.telefono = telefono;
         this.fechaRegistro = fechaRegistro;
         this.rol = rol;
-        this.transacciones = new ArrayList<>();
+        this.ventas = new ArrayList<>();
+        this.compras = new ArrayList<>();
         this.mensajesEnviados = new ArrayList<>();
         this.mensajesRecibidos = new ArrayList<>();
     }
@@ -138,14 +150,6 @@ public class Usuario {
         this.rol = rol;
     }
 
-    public List<Transaccion> getTransacciones() {
-        return transacciones;
-    }
-
-    public void setTransacciones(List<Transaccion> transacciones) {
-        this.transacciones = transacciones;
-    }
-
     public List<Mensaje> getMensajesEnviados() {
         return mensajesEnviados;
     }
@@ -160,6 +164,30 @@ public class Usuario {
 
     public void setMensajesRecibidos(List<Mensaje> mensajesRecibidos) {
         this.mensajesRecibidos = mensajesRecibidos;
+    }
+
+    public List<Transaccion> getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(List<Transaccion> ventas) {
+        this.ventas = ventas;
+    }
+
+    public List<Transaccion> getCompras() {
+        return compras;
+    }
+
+    public void setCompras(List<Transaccion> compras) {
+        this.compras = compras;
+    }
+
+    public List<Anuncio> getAnuncios() {
+        return anuncios;
+    }
+
+    public void setAnuncios(List<Anuncio> anuncios) {
+        this.anuncios = anuncios;
     }
 
     @Override

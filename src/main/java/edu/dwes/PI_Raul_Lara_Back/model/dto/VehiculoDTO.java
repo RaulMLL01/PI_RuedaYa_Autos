@@ -5,18 +5,20 @@ public class VehiculoDTO {
     private String marca;
     private String modelo;
     private String fechaFabricacion;
+    private String matricula;
     private String tipo;
     private Double precioEstimado;
 
     public VehiculoDTO() {
     }
 
-    public VehiculoDTO(Long id, String marca, String modelo, String fechaFabricacion, String tipo,
+    public VehiculoDTO(Long id, String marca, String modelo, String fechaFabricacion, String matricula, String tipo,
             Double precioEstimado) {
         this.id = id;
         this.marca = marca;
         this.modelo = modelo;
         this.fechaFabricacion = fechaFabricacion;
+        this.matricula = matricula;
         this.tipo = tipo;
         this.precioEstimado = precioEstimado;
     }
@@ -68,4 +70,13 @@ public class VehiculoDTO {
     public void setPrecioEstimado(Double precioEstimado) {
         this.precioEstimado = precioEstimado;
     }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
+
 }

@@ -20,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import edu.dwes.PI_Raul_Lara_Back.service.implementations.UsuarioServiceImpl;
 
@@ -89,10 +90,8 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
 
-                        .requestMatchers("/", "/home", "/bienvenida", "/info/**").permitAll()
-                        // .requestMatchers("/auth/login").permitAll()
-                        // .requestMatchers("/auth/register").permitAll()
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/", "/home", "/bienvenida", "/info/**", "/auth/**", "/mail/**", "/uploads/**")
+                        .permitAll()
 
                         .requestMatchers(HttpMethod.GET, "/anuncios/**").hasRole("USUARIO")
                         .requestMatchers(HttpMethod.POST, "/anuncios/**").hasRole("USUARIO")
@@ -107,6 +106,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/vehiculos/**").hasRole("OPERADOR")
                         .requestMatchers(HttpMethod.PUT, "/vehiculos/**").hasRole("OPERADOR")
                         .requestMatchers(HttpMethod.GET, "/usuarios/{id}").hasRole("OPERADOR")
+                        .requestMatchers(HttpMethod.GET, "/usuarios/**").hasRole("USUARIO")
+                        .requestMatchers(HttpMethod.POST, "/transacciones").hasRole("USUARIO")
+                        .requestMatchers("/usuarios/email/**").hasRole("USUARIO")
                         .requestMatchers("/usuarios/**").hasRole("OPERADOR")
 
                         .requestMatchers("/roles/**").hasRole("ADMIN")

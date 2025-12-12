@@ -1,29 +1,36 @@
 package edu.dwes.PI_Raul_Lara_Back.model.dto;
 
-import edu.dwes.PI_Raul_Lara_Back.model.entities.Transaccion;
-
 public class TransaccionDTO {
+    private Long id;
+    private Long vendedorId;
+    private Long compradorId;
     private Long anuncioId;
-    private Long usuarioId;
     private String tipo;
     private String fechaMovimiento;
+    private Double precio;
 
-    public TransaccionDTO() {
+    public Long getId() {
+        return id;
     }
 
-    public TransaccionDTO(Transaccion t) {
-        this.anuncioId = t.getAnuncio().getId();
-        this.usuarioId = t.getVendedor().getId();
-        this.tipo = t.getTipoTransaccion();
-        this.fechaMovimiento = t.getFechaMovimiento().toString();
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public TransaccionDTO(Long anuncioId, Long usuarioId, String tipo, String fechaMovimiento) {
-        this.anuncioId = anuncioId;
-        this.usuarioId = usuarioId;
-        this.tipo = tipo;
-        this.fechaMovimiento = fechaMovimiento;
+    public Long getVendedorId() {
+        return vendedorId;
+    }
 
+    public void setVendedorId(Long vendedorId) {
+        this.vendedorId = vendedorId;
+    }
+
+    public Long getCompradorId() {
+        return compradorId;
+    }
+
+    public void setCompradorId(Long compradorId) {
+        this.compradorId = compradorId;
     }
 
     public Long getAnuncioId() {
@@ -32,14 +39,6 @@ public class TransaccionDTO {
 
     public void setAnuncioId(Long anuncioId) {
         this.anuncioId = anuncioId;
-    }
-
-    public Long getUsuarioId() {
-        return usuarioId;
-    }
-
-    public void setUsuarioId(Long usuarioId) {
-        this.usuarioId = usuarioId;
     }
 
     public String getTipo() {
@@ -56,6 +55,14 @@ public class TransaccionDTO {
 
     public void setFechaMovimiento(String fechaMovimiento) {
         this.fechaMovimiento = fechaMovimiento;
+    }
+
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
     }
 
 }

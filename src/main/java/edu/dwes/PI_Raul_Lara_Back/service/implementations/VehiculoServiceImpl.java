@@ -61,14 +61,10 @@ public class VehiculoServiceImpl implements IVehiculoService {
     @Override
     @Transactional
     public VehiculoDTO createFromDTO(VehiculoDTO dto) {
-        Vehiculo v = new Vehiculo();
-        v.setMarca(dto.getMarca());
-        v.setModelo(dto.getModelo());
-        if (dto.getFechaFabricacion() != null)
-            v.setFecha_fabricacion(LocalDate.parse(dto.getFechaFabricacion()));
-        v.setTipo(dto.getTipo());
-        v.setPrecioEstimado(dto.getPrecioEstimado());
+
+        Vehiculo v = converter.toEntity(dto);
         Vehiculo saved = vehiculoRepo.save(v);
+
         return converter.toDTO(saved);
     }
 

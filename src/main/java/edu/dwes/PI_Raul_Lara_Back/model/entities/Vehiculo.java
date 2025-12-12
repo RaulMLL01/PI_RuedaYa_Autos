@@ -28,6 +28,9 @@ public class Vehiculo {
     @Column(length = 20)
     private String combustible;
 
+    @Column(nullable = false)
+    private String matricula;
+
     private Integer kilometraje;
 
     @Column(name = "precio_estimado")
@@ -40,6 +43,7 @@ public class Vehiculo {
     }
 
     public Vehiculo(Long id, String marca, String modelo, LocalDate fecha_fabricacion, String tipo, String combustible,
+            String matricula,
             Integer kilometraje, Double precioEstimado, Anuncio anuncio) {
         this.id = id;
         this.marca = marca;
@@ -122,6 +126,14 @@ public class Vehiculo {
 
     public void setAnuncio(Anuncio anuncio) {
         this.anuncio = anuncio;
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
     }
 
     @Override

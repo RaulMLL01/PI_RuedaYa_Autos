@@ -15,37 +15,42 @@ public class Anuncio {
     @Column(name = "id_anuncio")
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_vehiculo", nullable = false, unique = true)
     private Vehiculo vehiculo;
 
-    @Column(name = "fecha_publicacion")
+    @Column(name = "fecha_publicacion", nullable = false)
     private LocalDate fechaPublicacion;
 
-    @Column(length = 20)
+    @Column(length = 50)
     private String estado;
 
     @Column(columnDefinition = "TEXT")
     private String descripcion;
 
-    @OneToOne(mappedBy = "anuncio", cascade = CascadeType.ALL)
-    private Transaccion transaccion;
+    @ManyToOne
+    @JoinColumn(name = "id_vendedor", nullable = false)
+    private Usuario vendedor;
 
-    @OneToMany(mappedBy = "anuncio", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "anuncio", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Imagen> imagenes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "anuncio", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Transaccion> historialTransacciones = new ArrayList<>();
+
+    @Column(nullable = false)
+    private boolean vendido = false;
 
     public Anuncio() {
     }
 
-    public Anuncio(Long id, Vehiculo vehiculo, LocalDate fechaPublicacion, String estado,
-            String descripcion, Transaccion transaccion) {
+    public Anuncio(Long id, Vehiculo vehiculo, LocalDate fechaPublicacion,
+            String estado, String descripcion) {
         this.id = id;
         this.vehiculo = vehiculo;
         this.fechaPublicacion = fechaPublicacion;
         this.estado = estado;
         this.descripcion = descripcion;
-        this.transaccion = transaccion;
-        this.imagenes = new ArrayList<>();
     }
 
     public Long getId() {
@@ -88,12 +93,12 @@ public class Anuncio {
         this.descripcion = descripcion;
     }
 
-    public Transaccion getTransaccion() {
-        return transaccion;
+    public Usuario getVendedor() {
+        return vendedor;
     }
 
-    public void setTransaccion(Transaccion transaccion) {
-        this.transaccion = transaccion;
+    public void setVendedor(Usuario vendedor) {
+        this.vendedor = vendedor;
     }
 
     public List<Imagen> getImagenes() {
@@ -104,35 +109,42 @@ public class Anuncio {
         this.imagenes = imagenes;
     }
 
+    public List<Transaccion> getHistorialTransacciones() {
+        return historialTransacciones;
+    }
+
+    public void setHistorialTransacciones(List<Transaccion> historialTransacciones) {
+        this.historialTransacciones = historialTransacciones;
+    }
+
+    public boolean isVendido() {
+        return vendido;
+    }
+
+    public void setVendido(boolean vendido) {
+        this.vendido = vendido;
+    }
+
     @Override
     public String toString() {
-        return "Anuncio [id=" + id + ", vehiculo=" + vehiculo + ", fechaPublicacion="
-                + fechaPublicacion + ", estado=" + estado + ", descripcion=" + descripcion + "]";
+        return "Anuncio [id=" + id + ", vehiculo=" + vehiculo +
+                ", fechaPublicacion=" + fechaPublicacion +
+                ", estado=" + estado + ", descripcion=" + descripcion + "]";
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
+        return (id == null) ? 0 : id.hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
+        if (!(obj instanceof Anuncio))
             return false;
         Anuncio other = (Anuncio) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
+        return id != null && id.equals(other.id);
     }
 
 }

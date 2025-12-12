@@ -4,17 +4,18 @@ public class UsuarioDTO {
     private Long id;
     private String username;
     private String nombre;
-    private String password;
     private String email;
     private String telefono;
     private String fechaRegistro;
     private String rol;
+    private long totalAnuncios;
+    private long totalMensajes;
 
     public UsuarioDTO() {
     }
 
     public UsuarioDTO(Long id, String username, String nombre, String email, String telefono, String fechaRegistro,
-            String rol, String password) {
+            String rol) {
         this.id = id;
         this.username = username;
         this.nombre = nombre;
@@ -22,7 +23,6 @@ public class UsuarioDTO {
         this.telefono = telefono;
         this.fechaRegistro = fechaRegistro;
         this.rol = rol;
-        this.password = password;
     }
 
     public Long getId() {
@@ -81,12 +81,20 @@ public class UsuarioDTO {
         this.rol = rol;
     }
 
-    public String getPassword() {
-        return password;
+    public long getTotalAnuncios() {
+        return totalAnuncios;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setTotalAnuncios(long totalAnuncios) {
+        this.totalAnuncios = totalAnuncios;
+    }
+
+    public long getTotalMensajes() {
+        return totalMensajes;
+    }
+
+    public void setTotalMensajes(long totalMensajes) {
+        this.totalMensajes = totalMensajes;
     }
 
 }

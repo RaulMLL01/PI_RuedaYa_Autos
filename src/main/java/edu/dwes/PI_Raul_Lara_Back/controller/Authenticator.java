@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import edu.dwes.PI_Raul_Lara_Back.exceptions.NonExistentException;
 import edu.dwes.PI_Raul_Lara_Back.model.dto.LoginRequestDTO;
 import edu.dwes.PI_Raul_Lara_Back.model.dto.LoginResponseDTO;
+import edu.dwes.PI_Raul_Lara_Back.model.dto.RegistroDTO;
 import edu.dwes.PI_Raul_Lara_Back.model.dto.UsuarioDTO;
 import edu.dwes.PI_Raul_Lara_Back.model.entities.Usuario;
 import edu.dwes.PI_Raul_Lara_Back.service.DTOConverter;
@@ -45,9 +46,8 @@ public class Authenticator {
             Usuario usuario = usuarioService.findByEmail(request.getEmail());
 
             String token = jwtService.generateToken(usuario);
-
             return ResponseEntity.ok(
-                    new LoginResponseDTO(token, usuario.getEmail(), usuario.getRol().getNombre()));
+                    new LoginResponseDTO(token, usuario.getEmail(), usuario.getRol().getNombre(), usuario.getId()));
 
         } catch (AuthenticationException e) {
             return ResponseEntity.status(401).body("Credenciales incorrectas");
@@ -57,19 +57,36 @@ public class Authenticator {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registrar(@RequestBody UsuarioDTO request) {
+    public ResponseEntity<?> registrar(@RequestBody RegistroDTO request) {
         try {
-            if (usuarioService.findByEmail(request.getEmail()) != null) {
+
+            // Comprobaciones básicas
+            if (usuarioService.existsByEmail(request.getEmail())) {
                 return ResponseEntity.status(400).body("El email ya está registrado");
             }
+
+            if (usuarioService.existsByUsername(request.getUsername())) {
+                return ResponseEntity.status(400).body("El nombre de usuario ya está en uso");
+            }
+
+            // Crear usuario correctamente
             UsuarioDTO nuevo = usuarioService.createFromDTO(request);
-            Usuario usu = usuarioService.findByEmail(request.getEmail());
-            String token = jwtService.generateToken(usu);
+
+            // Obtener entidad completa para generar token
+            Usuario usuario = usuarioService.findByEmail(request.getEmail());
+
+            String token = jwtService.generateToken(usuario);
 
             return ResponseEntity.ok(
-                    new LoginResponseDTO(token, nuevo.getEmail(), nuevo.getRol()));
+                    new LoginResponseDTO(
+                            token,
+                            nuevo.getEmail(),
+                            nuevo.getRol(),
+                            nuevo.getId()));
+
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error al registrar usuario: " + e.getMessage());
+            return ResponseEntity.status(500)
+                    .body("Error al registrar usuario: " + e.getMessage());
         }
     }
 

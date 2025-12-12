@@ -8,10 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import edu.dwes.PI_Raul_Lara_Back.exceptions.NonExistentException;
-import edu.dwes.PI_Raul_Lara_Back.model.dto.TransaccionDTO;
+import edu.dwes.PI_Raul_Lara_Back.model.dto.AnuncioDTO;
+import edu.dwes.PI_Raul_Lara_Back.model.dto.RegistroDTO;
 import edu.dwes.PI_Raul_Lara_Back.model.dto.UsuarioDTO;
-import edu.dwes.PI_Raul_Lara_Back.model.entities.Usuario;
-import edu.dwes.PI_Raul_Lara_Back.service.DTOConverter;
 import edu.dwes.PI_Raul_Lara_Back.service.IUsuarioService;
 
 @RestController
@@ -21,9 +20,6 @@ public class UsuarioController {
 
     @Autowired
     private IUsuarioService usuarioService;
-
-    @Autowired
-    private DTOConverter converter;
 
     @GetMapping
     public ResponseEntity<List<UsuarioDTO>> listar() {
@@ -40,7 +36,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDTO> crear(@RequestBody UsuarioDTO dto) {
+    public ResponseEntity<UsuarioDTO> crear(@RequestBody RegistroDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.createFromDTO(dto));
     }
 
@@ -60,22 +56,23 @@ public class UsuarioController {
     }
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<?> getByEmail(@PathVariable String email) {
+    public ResponseEntity<UsuarioDTO> getPerfil(@PathVariable String email) {
         try {
-            Usuario u = usuarioService.findByEmail(email);
-            return ResponseEntity.ok(converter.toDTO(u));
+            return ResponseEntity.ok(usuarioService.findPerfilByEmail(email));
         } catch (NonExistentException e) {
-            return ResponseEntity.status(404).body("Usuario no encontrado");
+            return ResponseEntity.notFound().build();
         }
     }
 
-    @GetMapping("/{email}/anuncios")
-    public ResponseEntity<?> getAnunciosUsuario(@PathVariable String email) {
+    @GetMapping("/{id}/anuncios")
+    public ResponseEntity<?> getAnunciosByUsuarioId(@PathVariable Long id) {
         try {
-            List<TransaccionDTO> anuncios = usuarioService.findAllAnuncios(email);
-            return ResponseEntity.ok(anuncios);
-        } catch (NonExistentException e) {
-            return ResponseEntity.status(404).body("El usuario no existe");
+            List<AnuncioDTO> lista = usuarioService.findAnunciosByUsuario(id);
+            return ResponseEntity.ok(lista);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error al obtener los anuncios: " + e.getMessage());
         }
     }
 

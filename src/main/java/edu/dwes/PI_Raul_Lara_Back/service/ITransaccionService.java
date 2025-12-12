@@ -11,11 +11,15 @@ import edu.dwes.PI_Raul_Lara_Back.model.dto.TransaccionDTO;
 @Service
 public interface ITransaccionService {
 
+    // Obtener todas las transacciones en formato DTO
     List<TransaccionDTO> findAllDTO();
 
-    TransaccionDTO findDTO(Long anuncioId, Long usuarioId, String fecha) throws NonExistentException;
+    // Obtener una transacción por ID (id_transaccion)
+    TransaccionDTO findDTO(Long idTransaccion) throws NonExistentException;
 
+    // Crear una transacción a partir de un DTO
     TransaccionDTO createFromDTO(TransaccionDTO dto) throws NonExistentException;
 
-    void delete(Long anuncioId, Long usuarioId, String fecha);
+    // Eliminar una transacción por ID
+    void delete(Long idTransaccion);
 }
