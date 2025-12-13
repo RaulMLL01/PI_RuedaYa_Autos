@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,9 +42,8 @@ public class UsuarioServiceImpl implements IUsuarioService, UserDetailsService {
     @Autowired
     private DTOConverter converter;
 
-    // ======================================
-    // BÁSICOS
-    // ======================================
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<Usuario> findAll() {
@@ -84,10 +84,10 @@ public class UsuarioServiceImpl implements IUsuarioService, UserDetailsService {
 
         Usuario u = new Usuario();
 
-        // Datos básicos
         u.setUsername(dto.getUsername());
-        u.setPassword(dto.getPassword());
+        u.setPassword(passwordEncoder.encode(dto.getPassword()));
         u.setNombre(dto.getNombre());
+        u.setApellidos(dto.getApellidos());
         u.setEmail(dto.getEmail());
         u.setTelefono(dto.getTelefono());
         u.setFechaRegistro(LocalDate.now());
@@ -96,7 +96,6 @@ public class UsuarioServiceImpl implements IUsuarioService, UserDetailsService {
         u.setRol(rolUsuario);
 
         Usuario saved = usuarioRepo.save(u);
-
         return converter.toDTO(saved);
     }
 
@@ -112,6 +111,11 @@ public class UsuarioServiceImpl implements IUsuarioService, UserDetailsService {
 
         u.setUsername(dto.getUsername());
         u.setNombre(dto.getNombre());
+        u.setEmail(dto.getEmail());
+        u.setTelefono(dto.getTelefono());
+        u.setUsername(dto.getUsername());
+        u.setNombre(dto.getNombre());
+        u.setApellidos(dto.getApellidos());
         u.setEmail(dto.getEmail());
         u.setTelefono(dto.getTelefono());
 

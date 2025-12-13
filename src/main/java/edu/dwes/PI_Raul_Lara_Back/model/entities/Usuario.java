@@ -28,6 +28,9 @@ public class Usuario {
     @Column(nullable = false, length = 40)
     private String username;
 
+    @Column(nullable = false, length = 80, unique = true)
+    private String apellidos;
+
     @Column(name = "passwd", nullable = false, length = 255)
     private String password;
 
@@ -108,6 +111,14 @@ public class Usuario {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
     public String getEmail() {

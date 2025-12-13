@@ -146,6 +146,7 @@ public class DTOConverter {
                 u.getId(),
                 u.getUsername(),
                 u.getNombre(),
+                u.getApellidos(),
                 u.getEmail(),
                 u.getTelefono(),
                 fecha,

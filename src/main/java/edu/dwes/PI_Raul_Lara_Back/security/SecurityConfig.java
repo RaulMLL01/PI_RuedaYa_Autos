@@ -105,8 +105,8 @@ public class SecurityConfig {
 
                         .requestMatchers(HttpMethod.GET, "/vehiculos/**").hasRole("OPERADOR")
                         .requestMatchers(HttpMethod.PUT, "/vehiculos/**").hasRole("OPERADOR")
-                        .requestMatchers(HttpMethod.GET, "/usuarios/{id}").hasRole("OPERADOR")
                         .requestMatchers(HttpMethod.GET, "/usuarios/**").hasRole("USUARIO")
+                        .requestMatchers(HttpMethod.PUT, "/usuarios/**").hasRole("USUARIO")
                         .requestMatchers(HttpMethod.POST, "/transacciones").hasRole("USUARIO")
                         .requestMatchers("/usuarios/email/**").hasRole("USUARIO")
                         .requestMatchers("/usuarios/**").hasRole("OPERADOR")

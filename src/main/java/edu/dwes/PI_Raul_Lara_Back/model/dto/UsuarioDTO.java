@@ -4,6 +4,7 @@ public class UsuarioDTO {
     private Long id;
     private String username;
     private String nombre;
+    private String apellidos;
     private String email;
     private String telefono;
     private String fechaRegistro;
@@ -14,7 +15,8 @@ public class UsuarioDTO {
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(Long id, String username, String nombre, String email, String telefono, String fechaRegistro,
+    public UsuarioDTO(Long id, String username, String nombre, String apellidos, String email, String telefono,
+            String fechaRegistro,
             String rol) {
         this.id = id;
         this.username = username;
@@ -23,6 +25,7 @@ public class UsuarioDTO {
         this.telefono = telefono;
         this.fechaRegistro = fechaRegistro;
         this.rol = rol;
+        this.apellidos = apellidos;
     }
 
     public Long getId() {
@@ -95,6 +98,14 @@ public class UsuarioDTO {
 
     public void setTotalMensajes(long totalMensajes) {
         this.totalMensajes = totalMensajes;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
 }

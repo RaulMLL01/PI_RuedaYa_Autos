@@ -4,6 +4,7 @@ public class RegistroDTO {
 
     private String username;
     private String nombre;
+    private String apellidos;
     private String email;
     private String telefono;
     private String password;
@@ -49,6 +50,14 @@ public class RegistroDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
 }

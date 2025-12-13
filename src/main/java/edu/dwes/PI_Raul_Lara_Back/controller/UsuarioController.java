@@ -1,6 +1,7 @@
 package edu.dwes.PI_Raul_Lara_Back.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,8 +37,10 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDTO> crear(@RequestBody RegistroDTO dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.createFromDTO(dto));
+    public ResponseEntity<?> crear(@RequestBody RegistroDTO dto) {
+        usuarioService.createFromDTO(dto);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(Map.of("success", true));
     }
 
     @PutMapping("/{id}")
